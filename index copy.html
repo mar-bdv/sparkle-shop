@@ -1,0 +1,756 @@
+<!doctype html>
+<html lang="ru">
+
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sparkle Shop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <script type="module" src="/main.js"></script>
+  </head>
+
+  <body>
+
+    <header class="header">
+      <div class="container header__container">
+        <a href="#" class="header__link-logo">
+          <img class="header__logo" src="/imgs/sparkle-logo.png" alt="logo">
+        </a>
+
+        <div class="header__search">
+          <input class="header__input" type="search" name="search" placeholder="Введите запрос">
+
+          <button class="header__btn" type="submit">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M7.66671 13.9999C11.1645 13.9999 14 11.1644 14 7.66659C14 4.16878 11.1645 1.33325 7.66671 1.33325C4.1689 1.33325 1.33337 4.16878 1.33337 7.66659C1.33337 11.1644 4.1689 13.9999 7.66671 13.9999Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14.6667 14.6666L13.3334 13.3333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+
+
+        <div class="header__right">
+          <a href="#" class="header__link">
+              <span class="header__link-text">избранное</span>
+              
+              <svg width="25" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 4.29383L10.9249 3.14271C8.39835 0.437604 3.77122 1.3714 2.10054 4.77006C1.3148 6.36848 1.13813 8.67573 2.57144
+                11.6212C3.95186 14.458 6.82151 17.8538 12 21.554C17.1785 17.8538 20.0481 14.458 21.4286 11.6212C22.8619 8.67573 22.6852 6.36848 21.8995 
+                4.77006C20.2288 1.3714 15.6016 0.437604 13.0751 3.14271L12 4.29383ZM12 23.4375C-10.9997 7.60689 4.91814 -4.75136 11.7365 1.78607C11.8259 
+                1.87183 11.9138 1.96084 12 2.05313C12.0862 1.96084 12.1741 1.87183 12.2635 1.78608C19.0818 -4.75137 34.9997 7.60688 12 23.4375Z"
+                stroke-linecap="round" 
+                stroke-linejoin="round"/>
+              </svg>
+                
+                
+          </a>
+  
+          <a href="#" class="header__link">
+            <span class="header__link-text">корзина</span>
+
+            <span class="header__count">(5)</span>
+
+            <svg width="25" height="25" viewBox="0 0 25 25" 
+            fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12.5 1.5625C14.6574 1.5625 16.4062 3.31139 16.4062 5.46875V6.25H8.59375V5.46875C8.59375 3.31139 10.3426 1.5625 
+              12.5 1.5625ZM17.9688 6.25V5.46875C17.9688 2.44844 15.5203 0 12.5 0C9.47969 0 7.03125 2.44844 7.03125 5.46875V6.25H1.5625V21.875C1.5625 
+              23.6009 2.96161 25 4.6875 25H20.3125C22.0384 25 23.4375 23.6009 23.4375 21.875V6.25H17.9688ZM3.125 7.8125H21.875V21.875C21.875 22.7379 
+              21.1754 23.4375 20.3125 23.4375H4.6875C3.82455 23.4375 3.125 22.7379 3.125 21.875V7.8125Z" 
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-miterlimit="10"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      
+    </header>
+
+    <main class="main">
+      <div class="contaner"> 
+
+      <video autoplay muted loop id="myVideo">
+        <source src="/imgs/for-portfolio2.mp4" type="video/mp4">
+      </video>
+
+      
+      <div class="content">
+        <h1 class="content__heading">sparkle</h1>
+        <p class="content__quote">Украшения — это не просто детали, это история.</p>
+        
+        <div class="content__buttons">
+          <button class="content__pause" id="myBtn">остановить видео</button>
+          <button class="content__btn"><a href="catalog.html">перейти в каталог</a></button>
+        </div>
+        
+      </div></div>
+    
+    </main>
+
+    <footer class="footer">
+      <div class="container"></div>
+
+    </footer> 
+
+    <!-- 
+      <header class="header">
+      <div class="container header__container">
+          <a href="#" class="header__link-logo">
+              <img class="header__logo" src="/imgs/sparkle-logo.png" alt="logo">
+          </a>
+  
+          <div class="header__search">
+              <input class="header__input" type="search" name="search" placeholder="Введите запрос" value="Хеллоу">
+  
+              <button class="header__btn" type="submit">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.66671 13.9999C11.1645 13.9999 14 11.1644 14 7.66659C14 4.16878 11.1645 1.33325 7.66671 1.33325C4.1689 1.33325 1.33337 4.16878 1.33337 7.66659C1.33337 11.1644 4.1689 13.9999 7.66671 13.9999Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M14.6667 14.6666L13.3334 13.3333" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              </button>
+          </div>
+  
+  
+          <div class="header__right">
+              <a href="/favorite" class="header__link">
+                  <span class="header__link-text">избранное</span>
+                  
+                  <svg width="25" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M12 4.29383L10.9249 3.14271C8.39835 0.437604 3.77122 1.3714 2.10054 4.77006C1.3148 6.36848 1.13813 8.67573 2.57144
+                      11.6212C3.95186 14.458 6.82151 17.8538 12 21.554C17.1785 17.8538 20.0481 14.458 21.4286 11.6212C22.8619 8.67573 22.6852 6.36848 21.8995 
+                      4.77006C20.2288 1.3714 15.6016 0.437604 13.0751 3.14271L12 4.29383ZM12 23.4375C-10.9997 7.60689 4.91814 -4.75136 11.7365 1.78607C11.8259 
+                      1.87183 11.9138 1.96084 12 2.05313C12.0862 1.96084 12.1741 1.87183 12.2635 1.78608C19.0818 -4.75137 34.9997 7.60688 12 23.4375Z"
+                      stroke-linecap="round" 
+                      stroke-linejoin="round"/>
+                  </svg>
+                      
+                      
+              </a>
+      
+              <a href="/cart" class="header__link">
+                  <span class="header__link-text">корзина</span>
+      
+                  <span class="header__count">(5)</span>
+      
+                  <svg width="25" height="25" viewBox="0 0 25 25" 
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M12.5 1.5625C14.6574 1.5625 16.4062 3.31139 16.4062 5.46875V6.25H8.59375V5.46875C8.59375 3.31139 10.3426 1.5625 
+                  12.5 1.5625ZM17.9688 6.25V5.46875C17.9688 2.44844 15.5203 0 12.5 0C9.47969 0 7.03125 2.44844 7.03125 5.46875V6.25H1.5625V21.875C1.5625 
+                  23.6009 2.96161 25 4.6875 25H20.3125C22.0384 25 23.4375 23.6009 23.4375 21.875V6.25H17.9688ZM3.125 7.8125H21.875V21.875C21.875 22.7379 
+                  21.1754 23.4375 20.3125 23.4375H4.6875C3.82455 23.4375 3.125 22.7379 3.125 21.875V7.8125Z" 
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-miterlimit="10"/>
+                  </svg>
+              </a>
+          </div>
+  </header>
+
+  <main class="main">
+      <div class="catalog">
+        <div class="container catalog__container">
+          <ul class="catalog__list">
+            <li class="catalog__item">
+              <a href="/category?slug=Серьги" class="catalog__link">Серьги</a>
+            </li>
+            <li class="catalog__item">
+              <a href="/category?slug=Кольца" class="catalog__link catalog__link_active">Кольца</a>
+            </li>
+            <li class="catalog__item">
+              <a href="/category?slug=Браслеты" class="catalog__link">Браслеты</a>
+            </li>
+            <li class="catalog__item">
+              <a href="/category?slug=Колье" class="catalog__link">Колье</a>
+            </li>
+
+          </ul>
+        </div>
+      </div>
+      
+      <div class="breadcrumb" >
+        <div class="container">
+          <ul class="breadcrumb__list">
+            <li class="breadcrumb__item">
+              <a href="/" class="breadcrumb__link">Главная</a>
+              <span class="breadcrumb__separator">&gt;</span>
+            </li>
+            <li class="breadcrumb__item">
+              <a href="/category?slug=Кольца" class="breadcrumb__link">Кольца</a>
+              <span class="breadcrumb__separator">&gt;</span>
+            </li>
+            <li class="breadcrumb__item">
+              <a class="breadcrumb__link">Кольцо Серебряное</a>
+              <span class="breadcrumb__separator">&gt;</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <section class="goods">
+        <div class="container">
+          <h2 class="goods__title">Все украшения</h2>
+
+          <ul class="goods__list">
+            <li class="goods__item">
+              <article class="goods__card card">
+                <a href="/product/123" class="card__link card__link_img">
+                  <img src="https://pmdn.sokolov.io/pics/BD/32/6D9549C3D8CDE1BB2076DB15618D.jpg" alt="Серебряное кольцо" class="card__img">
+                </a>
+
+                <div class="card__info">
+                  <h3 class="card__title">
+                    <a href="/product/123" class="card__link">
+                      Кольцо Серебряное                
+                    </a>
+                  </h3>
+                </div>
+
+                <p class="card__price">3&nbsp;060&nbsp;₽</p>
+
+
+                <button class="card__btn">
+                  <svg width="26" height="24" viewBox="0 0 26 24" 
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="26" height="24" rx="12" fill="none"/>
+                    <path d="M13 4.875C14.2081 4.875 15.1875 5.85438 15.1875 7.0625V7.5H10.8125V7.0625C10.8125 5.85438 11.7919 4.875 13 4.875ZM16.0625 7.5V7.0625C16.0625 5.37113 14.6914 4 13 4C11.3086 4 9.9375 5.37113 9.9375 7.0625V7.5H6.875V16.25C6.875 17.2165 7.6585 18 8.625 18H17.375C18.3415 18 19.125 17.2165 19.125 16.25V7.5H16.0625ZM7.75 8.375H18.25V16.25C18.25 16.7332 17.8582 17.125 17.375 17.125H8.625C8.14175 17.125 7.75 16.7332 7.75 16.25V8.375Z" 
+                    fill="none"
+                    stroke="currentColor" 
+                    
+                    />
+                  </svg>
+
+                </button>
+
+                <button class="card__favorite">
+                  <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" fill="white"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" stroke="black"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" stroke="#F2F2F2" stroke-opacity="0.2"/>
+                    </svg>
+                    
+                </button>
+              </article>
+            </li>
+            
+            <li class="goods__item">
+              <article class="goods__card card">
+                <a href="/product/321" class="card__link card__link_img">
+                  <img src="./imgs/goods.png" alt="Серебряное кольцо" class="card__img">
+                </a>
+
+                <div class="card__info">
+                  <h3 class="card__title">
+                    <a href="/product/321" class="card__link">
+                      Кольцо Серебряное                
+                    </a>
+                  </h3>
+                </div>
+
+                <p class="card__price">3&nbsp;060&nbsp;₽</p>
+
+
+                <button class="card__btn">
+                  <svg width="26" height="24" viewBox="0 0 26 24" 
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="26" height="24" rx="12" fill="none"/>
+                    <path d="M13 4.875C14.2081 4.875 15.1875 5.85438 15.1875 7.0625V7.5H10.8125V7.0625C10.8125 5.85438 11.7919 4.875 13 4.875ZM16.0625 7.5V7.0625C16.0625 5.37113 14.6914 4 13 4C11.3086 4 9.9375 5.37113 9.9375 7.0625V7.5H6.875V16.25C6.875 17.2165 7.6585 18 8.625 18H17.375C18.3415 18 19.125 17.2165 19.125 16.25V7.5H16.0625ZM7.75 8.375H18.25V16.25C18.25 16.7332 17.8582 17.125 17.375 17.125H8.625C8.14175 17.125 7.75 16.7332 7.75 16.25V8.375Z" 
+                    fill="none"
+                    stroke="currentColor" 
+                    
+                    />
+                  </svg>
+                </button>
+
+                <button class="card__favorite">
+                  <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" fill="white"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" stroke="black"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" stroke="#F2F2F2" stroke-opacity="0.2"/>
+                    </svg>
+                    
+                    
+                </button>
+              </article>
+            </li>
+
+            <li class="goods__item">
+              <article class="goods__card card">
+                <a href="/product/456" class="card__link card__link_img">
+                  <img src="/imgs/goods-test.png" alt="Серебряное кольцо" class="card__img">
+                </a>
+
+                <div class="card__info">
+                  <h3 class="card__title">
+                    <a href="/product/456" class="card__link">
+                      Кольцо Серебряное                
+                    </a>
+                  </h3>
+                </div>
+
+                <p class="card__price">3&nbsp;060&nbsp;₽</p>
+
+
+                <button class="card__btn">
+                  <svg width="26" height="24" viewBox="0 0 26 24" 
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="26" height="24" rx="12" fill="none"/>
+                    <path d="M13 4.875C14.2081 4.875 15.1875 5.85438 15.1875 7.0625V7.5H10.8125V7.0625C10.8125 5.85438 11.7919 4.875 13 4.875ZM16.0625 7.5V7.0625C16.0625 5.37113 14.6914 4 13 4C11.3086 4 9.9375 5.37113 9.9375 7.0625V7.5H6.875V16.25C6.875 17.2165 7.6585 18 8.625 18H17.375C18.3415 18 19.125 17.2165 19.125 16.25V7.5H16.0625ZM7.75 8.375H18.25V16.25C18.25 16.7332 17.8582 17.125 17.375 17.125H8.625C8.14175 17.125 7.75 16.7332 7.75 16.25V8.375Z" 
+                    fill="none"
+                    stroke="currentColor" 
+                    
+                    />
+                  </svg>
+
+                </button>
+
+                <button class="card__favorite">
+                  <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" fill="white"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" stroke="black"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" stroke="#F2F2F2" stroke-opacity="0.2"/>
+                    </svg>
+                    
+                </button>
+              </article>
+            </li>
+            <li class="goods__item">
+              <article class="goods__card card">
+                <a href="/product/654" class="card__link card__link_img">
+                  <img src="./imgs/goods.png" alt="Серебряное кольцо" class="card__img">
+                </a>
+
+                <div class="card__info">
+                  <h3 class="card__title">
+                    <a href="/product/654" class="card__link">
+                      Кольцо Серебряное                
+                    </a>
+                  </h3>
+                </div>
+
+                <p class="card__price">3&nbsp;060&nbsp;₽</p>
+
+
+                <button class="card__btn">
+                  <svg width="26" height="24" viewBox="0 0 26 24" 
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="26" height="24" rx="12" fill="none"/>
+                    <path d="M13 4.875C14.2081 4.875 15.1875 5.85438 15.1875 7.0625V7.5H10.8125V7.0625C10.8125 5.85438 11.7919 4.875 13 4.875ZM16.0625 7.5V7.0625C16.0625 5.37113 14.6914 4 13 4C11.3086 4 9.9375 5.37113 9.9375 7.0625V7.5H6.875V16.25C6.875 17.2165 7.6585 18 8.625 18H17.375C18.3415 18 19.125 17.2165 19.125 16.25V7.5H16.0625ZM7.75 8.375H18.25V16.25C18.25 16.7332 17.8582 17.125 17.375 17.125H8.625C8.14175 17.125 7.75 16.7332 7.75 16.25V8.375Z" 
+                    fill="none"
+                    stroke="currentColor" 
+                    
+                    />
+                  </svg>
+
+                </button>
+
+                <button class="card__favorite">
+                  <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" fill="white"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" stroke="black"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" stroke="#F2F2F2" stroke-opacity="0.2"/>
+                    </svg>
+                    
+                </button>
+              </article>
+            </li>
+
+            <li class="goods__item">
+              <article class="goods__card card">
+                <a href="/product/789" class="card__link card__link_img">
+                  <img src="./imgs/goods.png" alt="Серебряное кольцо" class="card__img">
+                </a>
+
+                <div class="card__info">
+                  <h3 class="card__title">
+                    <a href="/product/789" class="card__link">
+                      Кольцо Серебряное                
+                    </a>
+                  </h3>
+                </div>
+
+                <p class="card__price">3&nbsp;060&nbsp;₽</p>
+
+
+                <button class="card__btn">
+                  <svg width="26" height="24" viewBox="0 0 26 24" 
+                  fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="26" height="24" rx="12" fill="none"/>
+                    <path d="M13 4.875C14.2081 4.875 15.1875 5.85438 15.1875 7.0625V7.5H10.8125V7.0625C10.8125 5.85438 11.7919 4.875 13 4.875ZM16.0625 7.5V7.0625C16.0625 5.37113 14.6914 4 13 4C11.3086 4 9.9375 5.37113 9.9375 7.0625V7.5H6.875V16.25C6.875 17.2165 7.6585 18 8.625 18H17.375C18.3415 18 19.125 17.2165 19.125 16.25V7.5H16.0625ZM7.75 8.375H18.25V16.25C18.25 16.7332 17.8582 17.125 17.375 17.125H8.625C8.14175 17.125 7.75 16.7332 7.75 16.25V8.375Z" 
+                    fill="none"
+                    stroke="currentColor" 
+                    
+                    />
+                  </svg>
+
+                </button>
+
+                <button class="card__favorite">
+                  <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" fill="white"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" stroke="black"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" stroke="#F2F2F2" stroke-opacity="0.2"/>
+                  </svg>
+                    
+                  
+                  
+                </button>
+              </article>
+            </li>
+          </ul>
+
+          <div class="pagination">
+            <div class="pagination__bar" style="--width: calc(12 / 31 * 100%)">
+            </div>
+
+            <div class="pagination__arrays">
+              <button class="pagination__left">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.86395 8.0001L8.52528 2.1821C8.5719 2.13522 8.60874 2.07955 8.6337 2.01833C8.65866 1.95711 8.67122 1.89155 8.67068 1.82544C8.67013 1.75933 8.65647 1.69398 8.6305 1.63318C8.60453 1.57239 8.56676 1.51734 8.51938 1.47124C8.472 1.42513 8.41594 1.38888 8.35445 1.36458C8.29297 1.34028 8.22727 1.32842 8.16117 1.32968C8.09507 1.33094 8.02988 1.34529 7.96936 1.37191C7.90885 1.39854 7.85421 1.43689 7.80862 1.48477L1.80862 7.65143C1.7178 7.74478 1.66699 7.86987 1.66699 8.0001C1.66699 8.13033 1.7178 8.25542 1.80862 8.34877L7.80862 14.5154C7.85421 14.5633 7.90885 14.6017 7.96936 14.6283C8.02988 14.6549 8.09507 14.6693 8.16117 14.6705C8.22727 14.6718 8.29297 14.6599 8.35445 14.6356C8.41594 14.6113 8.472 14.5751 8.51938 14.529C8.56676 14.4829 8.60453 14.4278 8.6305 14.367C8.65647 14.3062 8.67013 14.2409 8.67068 14.1748C8.67122 14.1087 8.65866 14.0431 8.6337 13.9819C8.60874 13.9207 8.5719 13.865 8.52528 13.8181L2.86395 8.0001Z" fill="#1C1C1C"/>
+                </svg>
+              </button>
+              <p>
+                <span class="pagination__current">12</span>
+                <span>из</span>
+                <span class="pagination__total">31</span>
+              </p>
+              <button class="pagination__right">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M13.136 8.0001L7.47472 2.1821C7.4281 2.13522 7.39126 2.07955 7.3663 2.01833C7.34134 1.95711 7.32878 1.89155 7.32932 1.82544C7.32987 1.75933 7.34353 1.69398 7.3695 1.63318C7.39547 1.57239 7.43324 1.51734 7.48062 1.47124C7.528 1.42513 7.58406 1.38888 7.64555 1.36458C7.70703 1.34028 7.77273 1.32842 7.83883 1.32968C7.90493 1.33094 7.97012 1.34529 8.03064 1.37191C8.09115 1.39854 8.14579 1.43689 8.19138 1.48477L14.1914 7.65143C14.2822 7.74478 14.333 7.86987 14.333 8.0001C14.333 8.13033 14.2822 8.25542 14.1914 8.34877L8.19138 14.5154C8.14579 14.5633 8.09115 14.6017 8.03064 14.6283C7.97012 14.6549 7.90493 14.6693 7.83883 14.6705C7.77273 14.6718 7.70703 14.6599 7.64555 14.6356C7.58406 14.6113 7.528 14.5751 7.48062 14.529C7.43324 14.4829 7.39547 14.4278 7.3695 14.367C7.34353 14.3062 7.32987 14.2409 7.32932 14.1748C7.32878 14.1087 7.34134 14.0431 7.3663 13.9819C7.39126 13.9207 7.4281 13.865 7.47472 13.8181L13.136 8.0001Z" fill="#1C1C1C"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <section class="product">
+        <div class="container product__container">
+          <h2 class="product__title">Кольцо Серебряное</h2>
+
+          <div class="product__picture">
+            <div class="swiper product__slider-main">
+              <div class="swiper-wrapper product__main-list">
+                <div class="swiper-slide product__slide product__thumbnails-slide">
+                  <img src="/imgs/goods-test.png">
+                </div>
+
+              
+                
+                <div class="swiper-slide product__slide ">
+                  <img src="/imgs/goods2.png" >
+                </div>
+                <div class="swiper-slide product__slide ">
+                  <img src="/imgs/goods3.png" >
+                </div>
+                
+              </div>
+              
+              <button class="product__arrow product__arrow_next">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="32" height="32" rx="16" transform="matrix(-1 0 0 1 32 0)" fill="white" fill-opacity="0.4"/>
+                  <path d="M20.136 16.0001L14.4747 10.1821C14.4281 10.1352 14.3913 10.0796 14.3663 10.0183C14.3413 9.95711 14.3288 9.89155 14.3293 9.82544C14.3299 9.75933 14.3435 9.69398 14.3695 9.63318C14.3955 9.57239 14.4332 9.51734 14.4806 9.47124C14.528 9.42513 14.5841 9.38888 14.6455 9.36458C14.707 9.34028 14.7727 9.32842 14.8388 9.32968C14.9049 9.33094 14.9701 9.34529 15.0306 9.37191C15.0912 9.39854 15.1458 9.43689 15.1914 9.48477L21.1914 15.6514C21.2822 15.7448 21.333 15.8699 21.333 16.0001C21.333 16.1303 21.2822 16.2554 21.1914 16.3488L15.1914 22.5154C15.1458 22.5633 15.0912 22.6017 15.0306 22.6283C14.9701 22.6549 14.9049 22.6693 14.8388 22.6705C14.7727 22.6718 14.707 22.6599 14.6455 22.6356C14.5841 22.6113 14.528 22.5751 14.4806 22.529C14.4332 22.4829 14.3955 22.4278 14.3695 22.367C14.3435 22.3062 14.3299 22.2409 14.3293 22.1748C14.3288 22.1087 14.3413 22.0431 14.3663 21.9819C14.3913 21.9207 14.4281 21.865 14.4747 21.8181L20.136 16.0001Z" fill="#1C1C1C"/>
+                </svg>    
+              </button>
+              <button class="product__arrow product__arrow_prev">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="32" height="32" rx="16" fill="white" fill-opacity="0.4"/>
+                  <path d="M11.864 16.0001L17.5253 10.1821C17.5719 10.1352 17.6087 10.0796 17.6337 10.0183C17.6587 9.95711 17.6712 9.89155 17.6707 9.82544C17.6701 9.75933 17.6565 9.69398 17.6305 9.63318C17.6045 9.57239 17.5668 9.51734 17.5194 9.47124C17.472 9.42513 17.4159 9.38888 17.3545 9.36458C17.293 9.34028 17.2273 9.32842 17.1612 9.32968C17.0951 9.33094 17.0299 9.34529 16.9694 9.37191C16.9088 9.39854 16.8542 9.43689 16.8086 9.48477L10.8086 15.6514C10.7178 15.7448 10.667 15.8699 10.667 16.0001C10.667 16.1303 10.7178 16.2554 10.8086 16.3488L16.8086 22.5154C16.8542 22.5633 16.9088 22.6017 16.9694 22.6283C17.0299 22.6549 17.0951 22.6693 17.1612 22.6705C17.2273 22.6718 17.293 22.6599 17.3545 22.6356C17.4159 22.6113 17.472 22.5751 17.5194 22.529C17.5668 22.4829 17.6045 22.4278 17.6305 22.367C17.6565 22.3062 17.6701 22.2409 17.6707 22.1748C17.6712 22.1087 17.6587 22.0431 17.6337 21.9819C17.6087 21.9207 17.5719 21.865 17.5253 21.8181L11.864 16.0001Z" fill="#1C1C1C"/>
+                </svg>
+                
+                  
+              </button>
+
+            </div>
+            <div class="swiper product__slider-thumbnails">
+              <div class="swiper-wrapper product__thumbnails-list">
+                <div class="swiper-slide product__thumbnails-slide">
+                  <img class="product__thumbnails-slide-img" src="/imgs/goods-test.png" >
+                </div>
+                <div class="swiper-slide product__thumbnails-slide">
+                  <img class="product__thumbnails-slide-img" src="/imgs/goods2.png" >
+                </div>
+                <div class="swiper-slide product__thumbnails-slide">
+                  <img class="product__thumbnails-slide-img" src="/imgs/goods3.png" >
+                </div>
+            </div>
+          </div>
+          </div>
+
+          
+          <div class="product__info">
+            <p class="product__price">5&nbsp;000&nbsp;₽</p>
+            <p class="product__article">арт.&nbsp;84348945757</p>
+          
+            <div class="product__characteristics">
+              <h3 class="product__characteristics-title">Общие характеристики</h3>
+
+              
+              <table class="product__characterisics-table table">
+                <tr class="table__row">
+                  <td class="table__field">Коллекция</td>
+                  <td class="table__value">Мирсаж</td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__field">Производитель</td>
+                  <td class="table__value">Россия</td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__field">Гарантия</td>
+                  <td class="table__value">18 мес.</td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__field">Срок службы</td>
+                  <td class="table__value">5 лет</td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__field">Цвет</td>
+                  <td class="table__value">Желтый</td>
+                </tr>
+                <tr class="table__row">
+                  <td class="table__field">Макс. нагрузка</td>
+                  <td class="table__value">130 кг</td>
+                </tr>
+              </table>
+            </div>
+              <div class="product__btns">
+                <button class="product__btn" type="button">В корзину</button>
+                <button class="product__like" type="button">
+                
+                  <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" fill="white"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" stroke="black"/>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M9 2.314C13.4384 -2.24799 24.5343 5.7355 9 16C-6.53427 5.7355 4.56164 -2.24799 9 2.314Z" stroke="#F2F2F2" stroke-opacity="0.2"/>
+                    </svg>
+                </button>
+              </div>
+            </div>
+        </div>
+      </section>
+      
+      
+
+      <section class="cart" >
+        <div class="container cart__container">
+          <h2 class="cart__title">Корзина</h2>
+
+          <ul class="cart__products">
+            <li class="cart__product">
+              <img src="/imgs/goods-test.png" alt="Кольцо серебряное" class="cart__img">
+              
+              <h3 class="cart__title-product">Кольцо серебряное</h3>
+            
+              <p class="cart__price">5&nbsp;000&nbsp;₽</p>
+              <p class="cart__article">арт.&nbsp;84348945757</p>
+              <div class="cart__product-control">
+                <button class="cart__product-btn">-</button>
+                <p class="cart__product-count">1</p>
+                <button class="cart__product-btn">+</button>
+              </div>
+            </li>
+
+            <li class="cart__product">
+              <img src="/imgs/goods-test.png" alt="Кольцо серебряное" class="cart__img">
+              
+              <h3 class="cart__title-product">Кольцо серебряное</h3>
+            
+              <p class="cart__price">10&nbsp;000&nbsp;₽</p>
+              <p class="cart__article">арт.&nbsp;84348945757</p>
+              <div class="cart__product-control">
+                <button class="cart__product-btn">-</button>
+                <p class="cart__product-count">2</p>
+                <button class="cart__product-btn">+</button>
+              </div>
+            </li>
+
+            <li class="cart__product">
+              <img src="/imgs/goods-test.png" alt="Кольцо серебряное" class="cart__img">
+              
+              <h3 class="cart__title-product">Кольцо серебряное</h3>
+            
+              <p class="cart__price">5&nbsp;000&nbsp;₽</p>
+              <p class="cart__article">арт.&nbsp;84348945757</p>
+              <div class="cart__product-control">
+                <button class="cart__product-btn">-</button>
+                <p class="cart__product-count">1</p>
+                <button class="cart__product-btn">+</button>
+              </div>
+            </li>
+          </ul>
+
+          <div class="cart__place">
+            <h3 class="cart__subtitle ">Оформление</h3>
+
+            <div class="cart__place-info">
+              <p class="cart__place-count">4 товара на сумму:</p>
+              <p class="cart__place-price">20 000 ₽</p>
+            </div>
+
+            <p class="cart__place-delivery">Доставка 0 ₽</p>
+
+            <button class="cart__place-btn" type="submit" form="order">
+              Оформить заказ
+            </button>
+          </div>
+
+          <form action="#" class="cart__form form-order" id="order" method="POST">
+            <h3 class="cart__subtitle cart__subtitle_form-order">Данные для доставки</h3>
+
+            <fieldset class="form-order__fieldset form-order__fieldset_input">
+              <input type="text" class="form-order__input" 
+              name="name" placeholder="Фамилия Имя Отчество">
+              <input type="tel" class="form-order__input" 
+              name="phone" placeholder="Телефон">
+              
+              <input type="email" class="form-order__input" 
+              name="email" placeholder="E-mail">
+              <input type="text" class="form-order__input" 
+              name="address" placeholder="Адрес доставки">
+            
+              <textarea class="form-order__textarea" name="comments" 
+              placeholder="Комментарий к заказу"></textarea>
+            
+            </fieldset>
+            <fieldset class="form-order__fieldset form-order__fieldset_radio">
+              <legend class="form-order__legend">Доставка</legend>
+              <label class="form-order__label radio">
+                <input type="radio" class="radio__input" 
+                name="deliveryType" value="delivery">
+                Доставка
+              </label>
+              <label class="form-order__label radio">
+                <input type="radio" class="radio__input" 
+                name="deliveryType" value="pickup">
+                Самовывоз
+              </label>
+            </fieldset>
+            
+
+            <fieldset class="form-order__fieldset form-order__fieldset_radio">
+              <legend class="form-order__legend">Оплата</legend>
+              <label class="form-order-label radio">
+                <input type="radio" class="radio__input" 
+                name="paymentType" value="card">
+                Картой при получении
+              </label>
+              <label class="form-order-label radio">
+                <input type="radio" class="radio__input" 
+                name="paymentType" value="cash">
+                Наличными при получении
+              </label>
+            </fieldset>
+          </form>
+        </div>
+      </section>
+      <section class="order">
+        <div class="order__container">
+          <div class="order__header">
+            <h4 class="order__header-title">Заказ успешно размещен</h4>
+            <p class="order__header-title order__container-price">20 000 ₽</p>
+          </div>
+          <div class="order__number">
+            <p class="order__number-ordering">№43435</p>
+          </div>
+
+          <div class="order__info">
+            <h4 class="order__info-title">Данные доставки</h4>
+
+            <table class="order__info-table table">
+
+              <tr class="table__row">
+                <td class="table__field">Получатель</td>
+                <td class="table__value">Иванов Петр Александрович</td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__field">Телефон</td>
+                <td class="table__value">+7 (737) 346 23 00</td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__field">E-mail</td>
+                <td class="table__value">Ivanov84@gmail.com</td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__field">Адрес доставки</td>
+                <td class="table__value">Москва, ул. Ленина, 21, кв. 33</td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__field">Способ оплаты</td>
+                <td class="table__value">Картой при получении</td>
+              </tr>
+              <tr class="table__row">
+                <td class="table__field">Способ получения</td>
+                <td class="table__value">Доставка</td>
+              </tr>
+              
+            </table>
+
+            <div class="order__buttons">
+              <button class="order__btn" type="submit">На главную</button>
+            </div>
+          </div>
+          
+        </div>
+      </section>
+
+    </main>
+    
+    <footer class="footer">
+      <div class="container footer__container">
+        <a href="/" class="footer__link-logo">
+          <img src="imgs/sparkle-logo.png" alt="Логотип ювелирного магазина Sparkle" class="footer__logo">
+        </a>
+        <div class="footer_contacts contacts">
+          <a href="tel:" class="contacts__phone">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M4.48572 1.54445L5.59257 1.21074C5.95787 1.10078 6.3507 1.12746 6.69778 1.2858C7.04486 1.44415 7.32248 1.72334 7.47886 2.07131L8.25486 3.79703C8.38954 4.09641 8.42708 4.43046 8.36221 4.75227C8.29734 5.07408 8.1333 5.36749 7.89315 5.59131L6.712 6.69188C6.55372 6.84217 6.67372 7.42788 7.252 8.43017C7.83086 9.43303 8.27829 9.8296 8.48457 9.76788L10.032 9.29474C10.3457 9.1988 10.6815 9.20341 10.9924 9.30794C11.3033 9.41246 11.5737 9.61166 11.7657 9.8776L12.8686 11.4062C13.0913 11.7148 13.1945 12.0939 13.1588 12.4728C13.1232 12.8518 12.9512 13.205 12.6749 13.4667L11.8223 14.2742C11.5471 14.5348 11.2076 14.7178 10.8386 14.8044C10.4696 14.891 10.0842 14.8782 9.72172 14.7673C7.93543 14.2205 6.28115 12.5976 4.73657 9.9216C3.18857 7.2416 2.604 4.98103 3.01143 3.13417C3.09361 2.76203 3.27354 2.41853 3.53269 2.1391C3.79183 1.85966 4.12081 1.65439 4.48572 1.54445Z" fill="white"/>
+              </svg>
+            <span>+7 (988) 888 22 94</span>
+          </a>
+
+          <ul class="contacts__list">
+            <li class="contacts__item">
+              <a href="#" class="contacts__link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M8.00001 0.320068C3.75841 0.320068 0.320007 3.75847 0.320007 8.00007C0.320007 12.2417 3.75841 15.6801 8.00001 15.6801C12.2416 15.6801 15.68 12.2417 15.68 8.00007C15.68 3.75847 12.2416 0.320068 8.00001 0.320068ZM10.9536 8.98487C10.9536 8.98487 11.6328 9.65527 11.8 9.96647C11.8048 9.97287 11.8072 9.97927 11.8088 9.98247C11.8768 10.0969 11.8928 10.1857 11.8592 10.2521C11.8032 10.3625 11.6112 10.4169 11.5456 10.4217H10.3456C10.2624 10.4217 10.088 10.4001 9.87681 10.2545C9.71441 10.1409 9.55441 9.95447 9.39841 9.77287C9.16561 9.50247 8.96401 9.26887 8.76081 9.26887C8.735 9.26882 8.70935 9.27287 8.68481 9.28087C8.53121 9.33047 8.33441 9.54967 8.33441 10.1337C8.33441 10.3161 8.19041 10.4209 8.08881 10.4209H7.53921C7.35201 10.4209 6.37681 10.3553 5.51281 9.44407C4.45521 8.32807 3.50321 6.08967 3.49521 6.06887C3.43521 5.92407 3.55921 5.84647 3.69441 5.84647H4.90641C5.06801 5.84647 5.12081 5.94487 5.15761 6.03207C5.20081 6.13367 5.35921 6.53767 5.61921 6.99207C6.04081 7.73287 6.29921 8.03367 6.50641 8.03367C6.54526 8.03321 6.58342 8.02333 6.61761 8.00487C6.88801 7.85447 6.83761 6.89047 6.82561 6.69047C6.82561 6.65287 6.82481 6.25927 6.68641 6.07047C6.58721 5.93367 6.41841 5.88167 6.31601 5.86247C6.35745 5.80528 6.41206 5.7589 6.47521 5.72727C6.66081 5.63447 6.99521 5.62087 7.32721 5.62087H7.51201C7.87201 5.62567 7.96481 5.64887 8.09521 5.68167C8.35921 5.74487 8.36481 5.91527 8.34161 6.49847C8.33441 6.66407 8.32721 6.85127 8.32721 7.07207C8.32721 7.12007 8.32481 7.17127 8.32481 7.22567C8.31681 7.52247 8.30721 7.85927 8.51681 7.99767C8.54415 8.01481 8.57574 8.02396 8.60801 8.02407C8.68081 8.02407 8.90001 8.02407 9.49361 7.00567C9.67668 6.67788 9.83576 6.33725 9.96961 5.98647C9.98161 5.96567 10.0168 5.90167 10.0584 5.87687C10.0891 5.86122 10.1231 5.85326 10.1576 5.85367H11.5824C11.7376 5.85367 11.844 5.87687 11.864 5.93687C11.8992 6.03207 11.8576 6.32247 11.2072 7.20327L10.9168 7.58647C10.3272 8.35927 10.3272 8.39847 10.9536 8.98487Z" fill="white"/>
+                </svg>
+              </a>
+            </li>
+            <li class="contacts__item">
+              <a href="#" class="contacts__link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M6.66668 9.99992L10.1267 7.99992L6.66668 5.99992V9.99992ZM14.3733 4.77992C14.46 5.09325 14.52 5.51325 14.56 6.04658C14.6067 6.57992 14.6267 7.03992 14.6267 7.43992L14.6667 7.99992C14.6667 9.45992 14.56 10.5333 14.3733 11.2199C14.2067 11.8199 13.82 12.2066 13.22 12.3733C12.9067 12.4599 12.3333 12.5199 11.4533 12.5599C10.5867 12.6066 9.79334 12.6266 9.06001 12.6266L8.00001 12.6666C5.20668 12.6666 3.46668 12.5599 2.78001 12.3733C2.18001 12.2066 1.79334 11.8199 1.62668 11.2199C1.54001 10.9066 1.48001 10.4866 1.44001 9.95325C1.39334 9.41992 1.37334 8.95992 1.37334 8.55992L1.33334 7.99992C1.33334 6.53992 1.44001 5.46659 1.62668 4.77992C1.79334 4.17992 2.18001 3.79325 2.78001 3.62659C3.09334 3.53992 3.66668 3.47992 4.54668 3.43992C5.41334 3.39325 6.20668 3.37325 6.94001 3.37325L8.00001 3.33325C10.7933 3.33325 12.5333 3.43992 13.22 3.62659C13.82 3.79325 14.2067 4.17992 14.3733 4.77992Z" fill="white"/>
+                </svg>
+              </a>
+            </li>
+            <li class="contacts__item">
+              <a href="#" class="contacts__link">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
+                  <path d="M16 8C16 10.1217 15.1571 12.1566 13.6569 13.6569C12.1566 15.1571 10.1217 16 8 16C5.87827 16 3.84344 15.1571 2.34315 13.6569C0.842855 12.1566 0 10.1217 0 8C0 5.87827 0.842855 3.84344 2.34315 2.34315C3.84344 0.842855 5.87827 0 8 0C10.1217 0 12.1566 0.842855 13.6569 2.34315C15.1571 3.84344 16 5.87827 16 8ZM8.287 5.906C7.509 6.23 5.953 6.9 3.621 7.916C3.243 8.066 3.044 8.214 3.026 8.358C2.996 8.601 3.301 8.697 3.716 8.828L3.891 8.883C4.299 9.016 4.849 9.171 5.134 9.177C5.394 9.183 5.683 9.077 6.002 8.857C8.181 7.386 9.306 6.643 9.376 6.627C9.426 6.615 9.496 6.601 9.542 6.643C9.589 6.684 9.584 6.763 9.579 6.784C9.549 6.913 8.352 8.025 7.733 8.601C7.54 8.781 7.403 8.908 7.375 8.937C7.31334 9.00001 7.25067 9.06202 7.187 9.123C6.807 9.489 6.523 9.763 7.202 10.211C7.529 10.427 7.791 10.604 8.052 10.782C8.336 10.976 8.62 11.169 8.988 11.411C9.081 11.471 9.171 11.536 9.258 11.598C9.589 11.834 9.888 12.046 10.255 12.012C10.469 11.992 10.69 11.792 10.802 11.192C11.067 9.775 11.588 6.706 11.708 5.441C11.7153 5.33584 11.711 5.2302 11.695 5.126C11.6856 5.04192 11.6449 4.96446 11.581 4.909C11.49 4.84619 11.3815 4.81365 11.271 4.816C10.971 4.821 10.508 4.982 8.287 5.906Z" fill="white"/>
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <ul class="footer__developer-list">
+          
+          <li class="footer__developer-item">
+            Developer:
+            <a href="#" class="footer__developer-link" target="_blank">Mariam B.</a>
+          </li>
+        </ul>
+
+        <p class="footer__copyright">© Sparkle, 2024</p>
+        
+      </div>
+    </footer> 
+
+
+
+  </body>
+
+</html>

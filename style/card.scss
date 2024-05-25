@@ -1,0 +1,144 @@
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+
+
+    
+    &__link {
+        text-transform: uppercase;
+
+        &_img {
+            display: block;
+            margin-bottom: 12px;
+
+            @media (min-width: 580px) {
+                margin-bottom: 16px;
+            }
+        }
+    }
+
+    &__img {
+        width: 100%;
+        object-fit: cover;
+        aspect-ratio: 7/6;
+
+        @media (min-width: 580px) {
+            aspect-ratio: 23/20;
+
+        }
+        @media (min-width: 820px) {
+            aspect-ratio: 151/125;
+            
+        }
+
+    }
+
+    &__info {
+        flex-grow: 1;
+
+        @media (min-width: 580px) {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+    }
+
+    &__title {
+        margin-bottom: 4px;
+        font-size: 12px;
+        font-weight: 400;
+
+        @media (min-width: 580px) {
+            padding-top: 15px;
+            font-size: 16px;
+            margin-bottom: 0;
+        }
+    }
+
+    &__price {
+        margin-bottom: 12px;
+        font-size: 16px;
+
+        @media (min-width: 580px) {
+            margin-bottom: 0;
+            font-size: 20px;
+        }
+    }
+
+    &__btn {
+        position: absolute;
+        bottom: 110px;
+        right: 12px;
+
+        svg {
+            fill: #ffffff;
+        }
+        rect {
+
+            fill: #D9D9D9;
+
+        }
+
+        &:hover {
+            color: #ffffff;
+            svg {
+                fill: #882335;
+            }
+
+            rect {
+                transition: all .2s ease-out;
+                fill: #a31c1c;
+            }
+        }
+        
+        &:active {
+            color: #ffffff;
+            svg {
+                color: #e4e4e4;
+                fill: #c62222;
+            }
+            rect {
+                fill: #c62222;
+            }
+        }
+
+        @media (min-width: 580px) {
+            bottom: 125px;
+
+        }
+    }
+
+    &__favorite {
+        position: absolute;
+        top: 12px;
+        right: 12px;
+
+        
+
+        &:hover, 
+        &_active {
+            color: #882335;
+
+            svg {
+                fill: #882335;
+            }
+
+            rect {
+                transition: all .2s ease-out;
+                fill: #a31c1c;
+            }
+        }
+        
+        &:active {
+            color: #a31c1c;
+            transition: none;
+            svg {
+                fill: #982b3f;
+            }  
+            
+        }
+    }
+}

@@ -1,0 +1,227 @@
+
+.cart {
+    padding-top: 24px;
+
+    @media (min-width: 580px) {
+        padding-top: 32px;
+    }
+
+    @media (min-width: 780px) {
+        padding-top: 40px;
+    }
+
+    &__container {
+        display: grid;
+        grid-template-areas: "title" "content" "form" "place";
+
+        @media (min-width: 880px) {
+        grid-template-columns: 1fr 302px;
+        gap: 40px 30px;
+        grid-template-areas: "title ." "content place" "form form";
+        justify-content: space-between;
+        }
+
+        @media (min-width: 1080px) {
+        grid-template-columns: 1fr 408px;
+        }
+    }
+
+    &__title {
+        grid-area: title;
+        font-size: 24px;
+        font-weight: 700;
+        margin-bottom: 24px;
+
+        @media (min-width: 580px) {
+        font-size: 32px;
+        margin-bottom: 24px;
+        }
+
+        @media (min-width: 880px) {
+        margin-bottom: 0;
+        }
+    }
+
+    &__products {
+        grid-area: content;
+        margin-bottom: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+
+        @media (min-width: 880px) {
+        margin-bottom: 0;
+        }
+    }
+
+    &__product {
+        display: grid;
+        align-items: center;
+        gap: 4px 8px;
+        grid-template-columns: 25vw min-content 1fr;
+        grid-template-rows: min-content min-content 1fr;
+        grid-template-areas:
+        "img title title"
+        "img article article"
+        "img control price";
+
+        @media (min-width: 480px) {
+        grid-template-columns: 120px 1fr min-content;
+        gap: 6px 12px;
+        grid-template-areas:
+            "img title price"
+            "img article article"
+            "img control .";
+        }
+
+        @media (min-width: 880px) {
+        max-width: 514px;
+        }
+    }
+
+    &__img {
+        grid-area: img;
+        border-radius: 16px;
+    }
+
+    &__title-product {
+        grid-area: title;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+
+        @media (min-width: 480px) {
+        font-size: 16px;
+        padding-top: 12px;
+        }
+    }
+
+    &__price {
+        grid-area: price;
+        color: #1c1c1c;
+
+        @media (min-width: 480px) {
+        align-self: start;
+        justify-self: end;
+        font-size: 16px;
+        padding-top: 12px;
+        }
+    }
+
+    &__article {
+        grid-area: article;
+        color: #969eae;
+        font-size: 9px;
+
+        @media (min-width: 480px) {
+        font-size: 12px;
+        }
+    }
+
+    &__product-control {
+        grid-area: control;
+        justify-self: start;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 5px 11px;
+        border-radius: 32px;
+        border: 1px solid #eeeff2;
+
+        @media (min-width: 480px) {
+        align-self: end;
+        }
+    }
+
+    &__product-btn {
+        width: 14px;
+        height: 14px;
+        line-height: 14px;
+        border: 1px solid transparent;
+        outline: none;
+
+        &:focus-visible {
+            border-color: #882335;
+        }
+    }
+
+    &__product-count {
+        min-width: 14px;
+        text-align: center;
+    }
+
+    &__place {
+        grid-area: place;
+        padding-top: 25px;
+
+        @media (min-width: 820px) {
+        padding-top: 0;
+        }
+    }
+
+    &__subtitle {
+        font-size: 16px;
+        font-weight: 400;
+        margin-bottom: 16px;
+
+        
+        &_form-order {
+        grid-column: 1/-1;
+        }
+
+        @media (min-width: 480px) {
+        font-size: 20px;
+        }
+    }
+
+    &__place-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 32px;
+
+        @media (min-width: 480px) {
+        font-size: 16px;
+        margin-bottom: 40px;
+        }
+    }
+
+    &__place-delivery {
+        color: #969eae;
+        font-size: 9px;
+        margin-bottom: 8px;
+
+        @media (min-width: 480px) {
+        font-size: 12px;
+        margin-bottom: 12px;
+        }
+    }
+
+    &__place-btn {
+        width: 100%;
+        padding: 12px 24px;
+        border: 1px solid transparent;
+        background-color: #882335;
+        color: #fff;
+        
+        &:hover {
+            background-color: #751d2d;
+        }
+
+    }
+
+    &__form {
+        grid-area: form;
+        padding-top: 30px;
+        padding-bottom: 25px;
+
+        @media (min-width: 580px) {
+            padding-top: 40px;
+            padding-bottom: 40px;
+        }
+
+        @media (min-width: 880px) {
+            padding-bottom: 0;
+        }
+    }
+}

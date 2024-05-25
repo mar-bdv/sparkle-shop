@@ -1,0 +1,152 @@
+.header {
+    padding-top: 16px;
+    padding-bottom: 100px;
+    border-bottom: 1px solid #ffffff;
+    background-image: url('./imgs/catalog-header.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    background-size: cover;
+
+    &__container {
+        display: grid;
+        gap: 16px;
+        align-items: center;
+        justify-content: space-between;
+        grid-template-areas: 
+        'logo control'
+        'search search ';
+
+        @media (min-width: 820px) {
+            grid-template-areas: 'logo search control';
+            grid-template-columns: 94px 1fr auto;
+            align-items: center;
+        }
+    }
+    
+    &__link-logo {
+        grid-area: logo;
+    }
+
+    &__logo {
+        width: 94px;
+    }
+
+    &__search {
+        grid-area: search;
+        position: relative;
+        width: 100%;
+        height: 38px;
+
+        @media (min-width: 820px) {
+            max-width: 408px;
+            justify-self: center;
+        }
+        @media (min-width: 1120px) {
+            max-width: 514px;
+        }
+    }
+    
+    &__input {
+        width: 100%;
+        height: 100%;
+        padding: 0 40px 0 24px;
+        // border-radius: 32px;
+        border: none;
+        border-bottom: 1px solid white;
+        background-color: transparent;
+        color: white;
+        font-size: 15px;
+        font-style: italic;
+
+        &::placeholder {
+            color: #969eae;
+
+        }
+
+        
+
+        &:focus-visible
+        {
+            outline: 1px solid white;
+        }
+    }
+
+    &__btn {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        right: 24px;
+        display: block;
+        width: 16px;
+        height: 16px;
+        border-radius: 4px;
+        outline-offset: 4px;
+        outline: 1px solid transparent;
+        color: white;
+
+        &:hover, &:active{
+            color: #882335;
+            transition: all 0.2s ease-in;
+        }
+
+        &:focus-visible {
+            color: #882335;
+            outline-color: #882335;
+        }
+    }
+
+    &__right {
+        grid-area: control;
+        justify-self: end;
+        display: flex;
+        gap: 16px;
+    }
+
+    &__control {
+        grid-area: control;
+        justify-self: end;
+        display: flex;
+        gap: 16px;
+    }
+
+    &__link {
+        display: flex;
+        flex-direction: row-reverse;
+        align-items: center;
+        gap: 4px;
+        color: white;
+        transition: all 0.2s ease-in;
+
+        svg {
+            fill: white;
+            transition: all 0.2s ease-in;
+
+        }
+
+        &:hover,
+        &:active  {
+            color: #882335;
+            svg {
+                fill: #882335
+            }
+        }
+
+        &:focus-visible {
+            color: #882335;
+            outline-color: #882335;
+        }
+
+        @media (min-width: 580px) {
+            flex-direction: row;
+        }
+    }
+
+    &__link-text {
+        display: none;
+        @media (min-width: 580px) {
+            display: block;
+        }
+    }
+}
+
