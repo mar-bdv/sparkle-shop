@@ -15,7 +15,9 @@ export class Card {
     }
 
     create() {
-        console.log(`${API_URL}`)
+        // console.log(`${API_URL}`)
+        // console.log(this.category)
+
         const article = document.createElement('article');
         article.classList.add('goods__card', 'card');
 

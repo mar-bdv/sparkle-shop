@@ -10,9 +10,12 @@ export class Pagination {
         return Pagination.instance;
     }
 
-    // update({}) {
-        
-    // }
+    update({currentPage, totalPages, totalProducts, limit}) {
+        this.paginationCurrent.textContent = currentPage;
+        this.paginationTotal.textContent = totalPages;
+
+        return this;
+    }
 
     createPagination() {
         const pagination = document.createElement('div');
@@ -78,6 +81,7 @@ export class Pagination {
         // }
 
         parent.append(this.pagination);
+        return this;
     }
 }
 
