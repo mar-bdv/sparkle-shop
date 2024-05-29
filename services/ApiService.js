@@ -60,7 +60,7 @@ export class ApiService  {
     async getProductCategories(category) {
         // return await this.getData(`api/productCategories`);
         console.log("getProductCategories getProductCategories")
-        return await this.getData('api/products', { category });
+        return await this.getData('api/products');
 
     }
 

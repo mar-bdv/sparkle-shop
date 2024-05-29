@@ -131,10 +131,10 @@ const init = () => {
     .on(
         "/", 
     async () => {
-        const products = await api.getProducts();
+        const { products } = await api.getProducts();
         new ProductList().mount(new Main().element, products);
         router.updatePageLinks(); 
-        console.log(products);
+        console.log(".on(/)", products);
     }, {
 
         leave(done) {
@@ -148,30 +148,102 @@ const init = () => {
     })
     
     // МОЯ
-    .on("/category", async ({ params: {  slug } }) => {
+    // .on("/category", async ({ params: {  slug } }) => {
         
-        const product = await api.getProducts({ category: slug });
-        const pagination = await api.getProducts({ category: slug });
+    //     // const {products, pagination} = await api.getProducts({ category: slug });
 
-        console.log("pagination", {pagination});
+    //     // console.log("pagination", {pagination});
         
-        const filteredProducts = product.filter(product => product.category === slug);
-        console.log('Filtered products:', filteredProducts);
+    //     // const filteredProducts = products.filter(product => product.category === slug);
+    //     // console.log('Filtered products:', filteredProducts);
 
-        console.log("Category slug:", slug);
-        new ProductList()
-        .mount(new Main().element, filteredProducts , slug);
-        new Pagination()
-        .mount(new ProductList().containerElement)
-        .update(pagination);
-        router.updatePageLinks();
+    //     // console.log("Category slug:", slug);
+
+    //     // new ProductList()
+    //     // .mount(new Main().element, filteredProducts , slug);
+    //     // new Pagination()
+    //     // .mount(new ProductList().containerElement)
+    //     // .update(pagination);
+    //     // router.updatePageLinks();
+
+    //         const { products, pagination } = await api.getProducts({ 
+    //             category: slug ,
+    //             // page: page || 1,
+    //         });
+    //         console.log("products", products)
+    //         console.log("pagination", pagination)
+
+    //         const filteredProducts = products.filter(product => product.category === slug);
+
+
+    //         new ProductList().mount(new Main().element, filteredProducts,  slug);
+    //         new Pagination()
+    //         .mount(new ProductList().containerElement)
+    //         .update(pagination);
+
+    //         router.updatePageLinks();
+        
+    // }, {
+    //     leave(done) {
+    //         new ProductList().unmount();
+    //         done();
+    //     }
+    // })
+
+    // main.js
+    .on("/category", async ({ params: { slug, page } }) => {
+        try {
+            const response = await api.getProducts({
+                category: slug,
+                page: page || 1,
+            });
+
+            const { products, pagination } = response;
+            console.log("products", products);
+            console.log("pagination", pagination);
+
+            const filteredProducts = products.filter(product => product.category === slug);
+
+            new ProductList().mount(new Main().element, filteredProducts, slug);
+            new Pagination()
+                .mount(new ProductList().containerElement)
+                .update(pagination[slug]);
+
+            router.updatePageLinks();
+        } catch (error) {
+            console.error("Failed to fetch products:", error);
+        }
     }, {
         leave(done) {
             new ProductList().unmount();
             done();
         }
     })
-     // МОЯ
+
+        // .on("/category", async ({ params: { slug } }) => {
+        //     const { products, pagination } = await api.getProducts({ 
+        //     category: slug,
+        //     // page: page || 1,
+        //     });
+        //     console.log("products", products);
+        //     console.log("pagination", pagination);
+        
+        //     const filteredProducts = products.filter(product => product.category === slug);
+        
+        //     new ProductList().mount(new Main().element, filteredProducts, slug);
+        //     new Pagination()
+        //     .mount(new ProductList().containerElement)
+        //     .update(pagination);
+        
+        //     router.updatePageLinks();
+        // }, {
+        //     leave(done) {
+        //     new ProductList().unmount();
+        //     done();
+        //     }
+        // })
+        
+
     // .on("/category", async ({ params: { slug, page } }) => {
     //     // ПОМЕНЯЛА
     //     const { data: products, pagination } = await api.getProducts({ 

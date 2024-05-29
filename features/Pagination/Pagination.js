@@ -14,6 +14,8 @@ export class Pagination {
         this.paginationCurrent.textContent = currentPage;
         this.paginationTotal.textContent = totalPages;
 
+        console.log("currentPage", currentPage)
+
         return this;
     }
 

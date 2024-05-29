@@ -33,49 +33,53 @@ export class Catalog {
         this.isMounted = false
     }
 
-    // renderListElem(data) {
-    //     const listElem = document.createElement('ul');
-    //     listElem.classList.add("catalog__list");
-
-    //         // Получаем уникальные категории из данных
-    //         const uniqueCategories = [...new Set(data.map(({ category }) => category))];
-
-    //         // Создаем элементы списка для каждой категории
-    //         const listItems = uniqueCategories.map((category) => {
-    //             const listItemElem = document.createElement("li");
-    //             listItemElem.classList.add("catalog__item");
-    
-    //             // Создаем ссылку на категорию
-    //             const link = document.createElement("a");
-    //             link.classList.add("catalog__link");
-    //             link.href = `/category?slug=${category}`;
-    //             link.textContent = category;
-    
-    //             // Добавляем ссылку в элемент списка
-    //             listItemElem.append(link);
-    //             return listItemElem;
-    //         });
-    renderListElem(data) {
+    renderListElem({products}) {
         const listElem = document.createElement('ul');
         listElem.classList.add("catalog__list");
 
-        const listItems = data.map(item => {
-            const listItemElem = document.createElement("li");
-            listItemElem.classList.add("catalog__item");
+            // Получаем уникальные категории из данных
+            const uniqueCategories = [...new Set(products.map(({ category }) => category))];
+
+            // Создаем элементы списка для каждой категории
+            const listItems = uniqueCategories.map((category) => {
+                const listItemElem = document.createElement("li");
+                listItemElem.classList.add("catalog__item");
+    
+                // Создаем ссылку на категорию
+                const link = document.createElement("a");
+                link.classList.add("catalog__link");
+                link.href = `/category?slug=${category}`;
+                link.textContent = category;
+    
+                // Добавляем ссылку в элемент списка
+                listItemElem.append( link);
+                return listItemElem;
+            }); 
+            listElem.append(...listItems);
+
+            this.containerElement.append(listElem);
+        }
+    // renderListElem({products}) {
+    //     const listElem = document.createElement('ul');
+    //     listElem.classList.add("catalog__list");
+
+    //     const listItems = products.map(item => {
+    //         const listItemElem = document.createElement("li");
+    //         listItemElem.classList.add("catalog__item");
             
-            const link = document.createElement("a");
-            link.classList.add("catalog__link");
-            link.href = `/category?slug=${item}`;
-            link.textContent = item;
+    //         const link = document.createElement("a");
+    //         link.classList.add("catalog__link");
+    //         link.href = `/category?slug=${item}`;
+    //         link.textContent = item;
 
-            listItemElem.append(link);
-            return listItemElem;
-        })
+    //         listItemElem.append(link);
+    //         return listItemElem;
+    //     })
 
-        listElem.append(...listItems);
+    //     listElem.append(...listItems);
 
-        this.containerElement.append(listElem);
-    }
+    //     this.containerElement.append(listElem);
+    // }
 
         // const listItems = data.map(({category: item}) => {
         //     const listItemElem = document.createElement("li");
@@ -89,6 +93,7 @@ export class Catalog {
         //     listItemElem.append(link);
         //     return listItemElem;
         // })
+
 
     
     
