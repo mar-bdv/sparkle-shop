@@ -1,5 +1,6 @@
 import { Logo } from "../../features/Logo/Logo";
 import { likeSvg } from "../../features/likeSvg/likeSvg";
+import { router } from "../../main";
 import { addContainer } from "../addContainer";
 
 export class Header { 
@@ -50,7 +51,7 @@ export class Header {
         input.classList.add("header__input");
         input.type="search";
         input.name="search";
-        input.placeholder="Введите запрос";
+        input.placeholder="Введите запрос или артикул";
 
         const button = document.createElement("button");
         button.classList.add("header__btn"),
@@ -65,9 +66,9 @@ export class Header {
         
         searchForm.addEventListener('submit', e => {
             e.preventDefault();
-            router.navigate(`/search?q=${input.value}`);
+            router.navigate(`/search?q=${encodeURIComponent(input.value)}`);
         })
-
+        
         searchForm.append(input, button);
         return searchForm;
     }
@@ -91,16 +92,6 @@ export class Header {
                     stroke-linejoin="round"/>
             </svg>
         `;
-
-        // const favoriteText = document.createElement('span');
-        // favoriteText.classList.add("header__link-text");
-        // favoriteText.textContent = "Избранное"
-
-        // favoriteLink.append(favoriteText);
-        // likeSvg().then(svg => {
-        //     favoriteLink.append(svg)
-        // })
-
         
         const cartLink = document.createElement("a");
         cartLink.classList.add("header__link");
@@ -135,8 +126,7 @@ export class Header {
         return navigation;
     }
 
-    changeCount() {
-        // todo n - получить
+    changeCount(n) {
         this.countElement.textContent = `(${n})`;
     }
 }

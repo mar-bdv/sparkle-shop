@@ -10,329 +10,421 @@ import { ApiService } from './services/ApiService';
 import { Catalog } from './modules/Catalog/Catalog';
 import { FavoriteService } from './services/StorageService';
 import { Pagination } from './features/Pagination/Pagination';
+import { BreadCrumbs } from './features/BreadCrumbs/BreadCrumbs';
+import { ProductCard } from './modules/ProductCard/ProductCard';
+import { productSlider } from './features/ProductSlider/productSlider';
+import { Cart } from './modules/Cart/Cart';
+import { Order } from './features/Order/Order';
 
 
-const productSlider = () => {
-    Promise.all([
-        import("swiper/modules"),
-        import("swiper"),
-        import("swiper/css")
-    ]).then(([{Navigation, Thumbs}, Swiper]) => {
-        const swiperThumbnails = new Swiper.default(".product__slider-thumbnails", {
-            spaceBetween: 10,
-            slidesPerView: 4, 
-            freeMode: true,
-            watchSlidesProgress: true,
-        });
-    
-        new Swiper.default(".product__slider-main", {
-            spaceBetween: 10,
-            navigation: {
-                nextEl: ".product__arrow_next",
-                prevEl: ".product__arrow_prev",
-            },
-            modules: [Navigation, Thumbs],
-            thumbs: {
-                swiper: swiperThumbnails,
-            }
-        })
-    })
 
-}
-
+export const router = new Navigo("/", { linksSelector: 'a[href^="/"]' })
 
 const init = () => {
     const api = new ApiService();
-    const router = new Navigo("/", { linksSelector: 'a[href^="/"]' })
 
 
     new Header().mount();
     new Main().mount();
     new Footer().mount();
     
-    api.getProductCategories().then(data => {
-    console.log(api)
-        new Catalog().mount(new Main().element, data);
-        router.updatePageLinks();
-    });
-    
-    productSlider();
 
 
-    // router
-    //     .on("/", 
-    //     async () => {
-    //         const products = await api.getProducts();
-    //         new ProductList().mount(new Main().element, products);
-    //         console.log(products)
-    //         router.updatePageLinks();
-    //     }, 
-    //     {
-    //         leave(done) {
-    //             new ProductList().unmount();
-    //             done()
-    //         },
-    //         already() {
-    //             console.log("already")
-    //         }
-    //     }
-    //     )
-    //     .on("/category", 
-    //         async ({params: {slug}}) => {
-    //             const product = await api.getProducts({category: slug});
-    //             new ProductList().mount(new Main().element, product, slug);
-    //             router.updatePageLinks();
-            
-    //         },
-
-    //         {
-    //             leave(done) {
-    //                 new ProductList().unmount();
-    //                 done()
-    //             }
-    //         }
-    //     )
-    //     .on("/favorite", 
-    //         async () => {
-    //             const favorite = new FavoriteService().get();
-    //             const id = await api.getProducts({id: favorite});
-   
-
-    //             // const id = await api.getProducts({id: favorite.join('&')});
-    //             console.log(favorite)
-    //             new ProductList().mount(new Main().element, id, 'Избранное', 'ошибка');
-    //             router.updatePageLinks();
-    //             // const favorite = new FavoriteService().get();
-    //             // const products = [];
-            
-    //             // for (const id of favorite) {
-    //             //     const product = await api.getProductById(id);
-    //             //     products.push(product);
-    //             // }
-            
-    //             // console.log(products);
-            
-    //             // new ProductList().mount(new Main().element, products, 'Избранное');
-    //             // router.updatePageLinks();
-    //         },
-
-    //         {
-    //             leave(done) {
-    //                 new ProductList().unmount();
-    //                 done()
-    //             },
-    //             already (match) {
-    //                 match.route.handler(match)
-    //             }
-    //         }
-
-    //     )
     router
-    .on(
-        "/", 
-    async () => {
-        const { products } = await api.getProducts();
-        new ProductList().mount(new Main().element, products);
-        router.updatePageLinks(); 
-        console.log(".on(/)", products);
-    }, {
+        .on(
+            "/", 
+            async () => {
+                new Catalog().mount(new Main().element);
 
-        leave(done) {
-            new ProductList().unmount();
-            done()
-        },
+                const { products } = await api.getProducts();
+                new ProductList().mount(new Main().element, products);
+                router.updatePageLinks(); 
+            }, {
 
-        already(match) {
-            match.route.handler(match);
-        },
-    })
-    
-    // МОЯ
-    // .on("/category", async ({ params: {  slug } }) => {
+            leave(done) {
+                new ProductList().unmount();
+                new Catalog().unmount();
+
+                done()
+            },
+
+            already(match) {
+                match.route.handler(match);
+            },
+        })
+
+        .on("/category", async ({ params: { slug, page = 1 } }) => {
+            (await new Catalog().mount(new Main().element)).setActiveLink(slug);
+                const response = await api.getProducts({
+                    category: slug,
+                    page: page,
+                });
+
+                const { products, pagination } = response;
+
+                const filteredProducts = products.filter(product => product.category === slug);
+
+                new BreadCrumbs().mount(new Main().element, [{ text: slug }]);
+                new ProductList().mount(new Main().element, filteredProducts, slug);
+            
+                //  КОД ДЛЯ ТОГО, ЧТОБЫ ПАГИНАЦИЯ ОТОБРАЖАЛАСЬ ТОЛЬКО КОГДА totalProducts больше, чем limit
+                console.log("MAIN JS", pagination[slug].totalProducts, pagination[slug].limit)
+
+                if (pagination[slug].totalProducts > pagination[slug].limit) {
+                    
+                    new Pagination()
+                    .mount(new ProductList().containerElement)
+                    .update(pagination[slug]);
+                    
+                }
+            
+                //     new Pagination()
+                //     .mount(new ProductList().containerElement)
+                //     .update(pagination[slug]);
+                // }
+                
+                // new Pagination()
+                // .mount(new ProductList().containerElement)
+                // .update(pagination[slug]);
         
-    //     // const {products, pagination} = await api.getProducts({ category: slug });
 
-    //     // console.log("pagination", {pagination});
+                router.updatePageLinks();
         
-    //     // const filteredProducts = products.filter(product => product.category === slug);
-    //     // console.log('Filtered products:', filteredProducts);
+        }, {
 
-    //     // console.log("Category slug:", slug);
-
-    //     // new ProductList()
-    //     // .mount(new Main().element, filteredProducts , slug);
-    //     // new Pagination()
-    //     // .mount(new ProductList().containerElement)
-    //     // .update(pagination);
-    //     // router.updatePageLinks();
-
-    //         const { products, pagination } = await api.getProducts({ 
-    //             category: slug ,
-    //             // page: page || 1,
-    //         });
-    //         console.log("products", products)
-    //         console.log("pagination", pagination)
-
-    //         const filteredProducts = products.filter(product => product.category === slug);
-
-
-    //         new ProductList().mount(new Main().element, filteredProducts,  slug);
-    //         new Pagination()
-    //         .mount(new ProductList().containerElement)
-    //         .update(pagination);
-
-    //         router.updatePageLinks();
+            leave(done) {
+                new BreadCrumbs().unmount();
+                new ProductList().unmount();
+                new Catalog().unmount();
+                done();
+            },
+            already(match) {
+                match.route.handler(match);
+            }
+        })
         
-    // }, {
-    //     leave(done) {
-    //         new ProductList().unmount();
-    //         done();
-    //     }
-    // })
-
-    // main.js
-    .on("/category", async ({ params: { slug, page } }) => {
-        try {
-            const response = await api.getProducts({
-                category: slug,
-                page: page || 1,
-            });
-
-            const { products, pagination } = response;
-            console.log("products", products);
-            console.log("pagination", pagination);
-
-            const filteredProducts = products.filter(product => product.category === slug);
-
-            new ProductList().mount(new Main().element, filteredProducts, slug);
-            new Pagination()
-                .mount(new ProductList().containerElement)
-                .update(pagination[slug]);
-
-            router.updatePageLinks();
-        } catch (error) {
-            console.error("Failed to fetch products:", error);
-        }
-    }, {
-        leave(done) {
-            new ProductList().unmount();
-            done();
-        }
-    })
-
-        // .on("/category", async ({ params: { slug } }) => {
-        //     const { products, pagination } = await api.getProducts({ 
-        //     category: slug,
-        //     // page: page || 1,
-        //     });
-        //     console.log("products", products);
-        //     console.log("pagination", pagination);
+        // // Endpoint для получения продуктов по категории с пагинацией
+        // .on("/category", async ({ params: { slug, page = 1 } }) => {
+        //     new Catalog().mount(new Main().element);
+        //     try {
+        //         const response = await api.getProducts({
+        //             category: slug,
+        //             page: page,
+        //         });
         
-        //     const filteredProducts = products.filter(product => product.category === slug);
+        //         const { products, pagination } = response;
+        //         console.log("productS", products);
+        //         console.log("pagination", pagination);
         
-        //     new ProductList().mount(new Main().element, filteredProducts, slug);
-        //     new Pagination()
-        //     .mount(new ProductList().containerElement)
-        //     .update(pagination);
+        //         const filteredProducts = products.filter(product => product.category === slug);
         
-        //     router.updatePageLinks();
+        //         new BreadCrumbs().mount(new Main().element, [{ text: slug }]);
+        //         new ProductList().mount(new Main().element, filteredProducts, slug);
+        //         if (pagination && pagination[slug]) {
+        //             new Pagination()
+        //                 .mount(new ProductList().containerElement)
+        //                 .update(pagination[slug]);
+        //         }
+        
+        //         router.updatePageLinks();
+        //     } catch (error) {
+        //         console.error("Failed to fetch products:", error);
+        //     }
         // }, {
         //     leave(done) {
-        //     new ProductList().unmount();
-        //     done();
+        //         new BreadCrumbs().unmount();
+        //         new ProductList().unmount();
+        //         new Catalog().unmount();
+        //         done();
         //     }
         // })
         
 
-    // .on("/category", async ({ params: { slug, page } }) => {
-    //     // ПОМЕНЯЛА
-    //     const { data: products, pagination } = await api.getProducts({ 
-    //         category: slug ,
-    //         page: page || 1,
-    //     });
-        
-    //     new ProductList().mount(new Main().element, products, slug);
-    //     new Pagination()
-    //     .mount(new ProductList().containerElement)
-    //     // .update(pagination);
-    //     router.updatePageLinks();
-    // }, {
-    //     leave(done) {
-    //         new ProductList().unmount();
-    //         done();
-    //     }
-    // })
-    .on("/favorite", async () => {
-        // ПОМЕНЯЛА
-        // async () => {
-        //     const favorite = new FavoriteService().get();
-        //     const {data: product} = await api.getProducts({
-        //         list: favorite
-        //     });
-        //     new ProductList().mount(new Main().element,
-        //     product,
-        //     "Избранное",
-        //     "Вы ничего не добавили в избранное, пожалуйста, добавьте что-нибудь");
+        .on("/favorite", async ({ params }) => {
+            new Catalog().mount(new Main().element);
+            const favorite = new FavoriteService().get();
+            const displayEmptyMessage = () => new ProductList().mount(new Main().element, [], 'Избранное', 'Вы ничего не добавили в избранное, пожалуйста, добавьте что-нибудь');
 
-        //     router.updatePageLinks();
-        // },
-        // {
+            // Проверка, что favorite - массив
+            if (!Array.isArray(favorite) || favorite.length === 0) {
+                displayEmptyMessage();
+            } else {
+                try {
+                    const { products, pagination } = await api.getProducts({ 
+                        id: favorite ,
+                        page: params?.page || 1
+                    });
+                    
+                    console.log('Products:', products); // Логируем полученные товары
+            
+                    // Проверка, что products - массив
+                    if (!Array.isArray(products)) {
+                        throw new Error('Expected products to be an array but got:', products);
+                    }
+                    new BreadCrumbs().mount(new Main().element, [{ text: 'Избранное' }]);
+                    new ProductList().mount(new Main().element, products, 
+                    'Избранное', 'Вы ничего не добавили в избранное, пожалуйста, добавьте что-нибудь');
+
+                /*  КОД ДЛЯ ТОГО, ЧТОБЫ ПАГИНАЦИЯ ОТОБРАЖАЛАСЬ ТОЛЬКО КОГДА totalProducts больше, чем limit
+                // console.log(pagination[slug]?.totalProducts, pagination[slug]?.limit)
+                // if (pagination[slug].totalProducts > pagination[slug].limit) {
+                //     new Pagination()
+                //     .mount(new ProductList().containerElement)
+                //     .update(pagination[slug]);
+                // }
+                */
+
+                    if (favorite.length > 0) {
+                        new Pagination()
+                        .mount(new ProductList().containerElement)
+                        .update(pagination)
+                    };
+                } catch (error) {
+                    console.error('Error fetching products:', error);
+                }
+            }
+
+        router.updatePageLinks();
+        }, {
+            leave(done) {
+                new ProductList().unmount();
+                new Catalog().unmount();
+                new BreadCrumbs().unmount();
+                done();
+            },
+            already(match) {
+                match.route.handler(match);
+            }
+        })
+
+        // .on("/search", async ({ params }) => {
+        //     console.log("Search")
+        //     console.log("PARAMS:", params)
+        //     new Catalog().mount(new Main().element);
+        //     // const displayEmptyMessage = () => new ProductList().mount(new Main().element, [], 'Избранное', 'Вы ничего не добавили в избранное, пожалуйста, добавьте что-нибудь');
+
+        //     try {
+        //         const { products, pagination } = await api.getProducts({ 
+        //             q: params.q,
+        //         });
+                
+        //         console.log('Products:', products); // Логируем полученные товары
+        
+        //         // Проверка, что products - массив
+        //         if (!Array.isArray(products)) {
+        //             throw new Error('Expected products to be an array but got:', products);
+        //         }
+        //         new BreadCrumbs().mount(new Main().element, [{ text: 'Избранное' }]);
+        //         new ProductList().mount(new Main().element, products, 
+        //         'Избранное', 'Вы ничего не добавили в избранное, пожалуйста, добавьте что-нибудь');
+                
+        //         new Pagination()
+        //         .mount(new ProductList().containerElement).update(pagination);
+        //     } catch (error) {
+        //         console.error('Error fetching products:', error);
+        //     }
+    
+
+        // router.updatePageLinks();
+        // }, {
         //     leave(done) {
         //         new ProductList().unmount();
-        //         done()
+        //         new Catalog().unmount();
+        //         new BreadCrumbs().unmount();
+        //         done();
         //     },
         //     already(match) {
         //         match.route.handler(match);
         //     }
-        // }
-
-
-        const favorite = new FavoriteService().get();
-        console.log('Favorite IDs:', favorite); // Логируем идентификаторы избранных товаров
-        const displayEmptyMessage = () => new ProductList().mount(new Main().element, [], 'Избранное', 'Вы ничего не добавили в избранное, пожалуйста, добавьте что-нибудь');
-
-        // Проверка, что favorite - массив
-        if (!Array.isArray(favorite) || favorite.length === 0) {
-            console.log('No favorites, displaying empty message');
-            displayEmptyMessage();
-        } else {
+        // })
+        .on("/search", async ({ params: { q } }) => {
             try {
-                const products = await api.getProducts({ id: favorite });
-                console.log('Products:', products); // Логируем полученные товары
-        
-                // Проверка, что products - массив
-                if (!Array.isArray(products)) {
-                    throw new Error('Expected products to be an array but got:', products);
+                new Catalog().mount(new Main().element);
+                const { products, pagination } = await api.getSearchProducts(
+                    { q }
+                );
+                console.log("/search PRODUCTS", { q })
+                new BreadCrumbs().mount(new Main().element, [{ text: "Поиск" }]);
+                new ProductList().mount(
+                    new Main().element,
+                    products,
+                    `Поиск: ${q}`,
+                    `Ничего не найдено по вашему запросу "${q}"`
+                );
+                if (pagination?.totalProducts > pagination?.limit) {
+                    new Pagination()
+                        .mount(new ProductList().containerElement)
+                        .update(pagination);
                 }
-        
-                new ProductList().mount(new Main().element, products, 'Избранное', 'Вы ничего не добавили в избранное, пожалуйста, добавьте что-нибудь');
+                router.updatePageLinks();
             } catch (error) {
-                console.error('Error fetching products:', error);
+                console.error("Ошибка при поиске товаров:", error);
             }
-        }
+        }, {
+            leave(done) {
+                new BreadCrumbs().unmount();
+                new ProductList().unmount();
+                new Catalog().unmount();
+                done();
+            },
+            already(match) {
+                match.route.handler(match);
+            }
+        })
 
-        router.updatePageLinks();
-    }, {
-        leave(done) {
-            new ProductList().unmount();
-            done();
-        },
-        already(match) {
-            match.route.handler(match);
-        }
-    })
-        .on("/search", () => {
-            console.log("search")
+        
+        .on("/product/:id", async (obj) => {
+            console.log("Route object:", obj);
+            console.log("Product ID:", obj.data.id);
+            new Catalog().mount(new Main().element);
+        
+            // Исправляем вызов API для получения данных о продукте
+            const data = await api.getProductById(obj.data.id);
+            console.log("API response data:", data);
+        
+            const product = data.products.find(p => p.id === parseInt(obj.data.id, 10));
+            if (!product) {
+                console.error("Product not found");
+                return;
+            }
+        
+            console.log("Product data:", product);
+        
+            new BreadCrumbs().mount(new Main().element, [
+                {
+                    text: product.category,
+                    href: `/category?slug=${product.category}`
+                },
+                {
+                    text: product.name
+                }
+            ]);
+            new ProductCard().mount(new Main().element, product);
+            productSlider();
+        }, {
+            leave(done) {
+                new Catalog().unmount();
+                new BreadCrumbs().unmount();
+                new ProductCard().unmount();
+                done();
+            }
         })
-        .on("/product/:id", (obj) => {
-            console.log('obj:', obj)
+        
+
+        .on("/cart", async () => {
+            const cartItems = await api.getCart();
+            new Cart().mount(
+                new Main().element, cartItems, 'Корзина пуста, добавьте товары'
+            )
+        }, {
+            leave(done) {
+                new Cart().unmount();
+                done();
+            }
         })
-        .on("/cart", () => {
-            console.log("cart")
-        })
-        .on("/order", () => {
-            console.log("order")
-        })
+        // .on("/order/:id", ({data: { id }}) => {
+        //     console.log(`order: ${id}`);
+
+        //     api.getOrder(id).then(data => {
+        //         console.log(data)
+        //     })
+        // })
+
+        // .on("/api/orders/:id", async ({ data: { id } }) => { //ПОМЕНЯЛА НА api/orders CHAT GPT
+        //     try {
+        //         console.log("api/orders/id -", id)
+        //         // Показываем индикатор загрузки, пока данные загружаются
+        //         const mainElement = new Main().element;
+        //         mainElement.innerHTML = '<div class="loading">Загрузка заказа...</div>';
+        
+        //         // Получаем данные заказа по ID
+        //         const orderData = await api.getOrder(id);
+        
+        //         if (!orderData) {
+        //             // Если заказ не найден, показываем сообщение об ошибке
+        //             mainElement.innerHTML = `
+        //                 <div class="not-found">
+        //                     <h2>Заказ не найден</h2>
+        //                     <p>Проверьте правильность номера заказа или <a href="/">вернитесь на главную страницу</a>.</p>
+        //                 </div>
+        //             `;
+        //             return;
+        //         }
+        
+        //         // Монтируем компонент Order с полученными данными
+        //         new Order().mount(mainElement, orderData);
+        
+        //         // Обновляем ссылки маршрутизатора, если это необходимо
+        //         router.updatePageLinks();
+        //     } catch (error) {
+        //         console.error('Ошибка при получении данных заказа:', error);
+        //         mainElement.innerHTML = `
+        //             <div class="error">
+        //                 <h2>Произошла ошибка</h2>
+        //                 <p>Не удалось загрузить данные заказа. Пожалуйста, попробуйте позже.</p>
+        //             </div>
+        //         `;
+        //     }
+        // }, {
+        //     leave(done) {
+        //         // Размонтируем компонент Order при уходе с маршрута
+        //         new Order().unmount();
+        //         done();
+        //     },
+        //     already(match) {
+        //         match.route.handler(match);
+        //     }
+        // })
+        .on("/api/orders/:id", async ({ data: { id } }) => {
+            try {
+                console.log("api/orders/id -", id);
+                // Показываем индикатор загрузки, пока данные загружаются
+                const mainElement = new Main().element;
+                mainElement.innerHTML = '<div class="loading">Загрузка заказа...</div>';
+                
+                // Получаем данные заказа по ID
+                const orderData = await api.getOrder(id);
+
+                if (!orderData) {
+                    // Если заказ не найден, показываем сообщение об ошибке
+                    mainElement.innerHTML = `
+                        <div class="not-found">
+                            <h2>Заказ не найден</h2>
+                            <p>Проверьте правильность номера заказа или <a href="/">вернитесь на главную страницу</a>.</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                // Монтируем компонент Order с полученными данными
+                // new Order().mount(mainElement, orderData);
+
+                new Order().mount(mainElement, orderData, id);
+
+
+                // Обновляем ссылки маршрутизатора, если это необходимо
+                router.updatePageLinks();
+            } catch (error) {
+                console.error('Ошибка при получении данных заказа:', error);
+                mainElement.innerHTML = `
+                    <div class="error">
+                        <h2>Произошла ошибка</h2>
+                        <p>Не удалось загрузить данные заказа. Пожалуйста, попробуйте позже.</p>
+                    </div>
+                `;
+            }
+            }, {
+                leave(done) {
+                    // Размонтируем компонент Order при уходе с маршрута
+                    new Order().unmount();
+                    done();
+                },
+                already(match) {
+                    match.route.handler(match);
+                }
+            })
+
+
         .notFound(() => {
             
             new Main().element.innerHTML = `
@@ -351,6 +443,10 @@ const init = () => {
         });
 
     router.resolve();
+
+    api.getCart().then(data => {
+        new Header().changeCount(data.cart.totalQuantity)
+    })
 };
 
 init();
