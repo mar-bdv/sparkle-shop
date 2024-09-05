@@ -70,7 +70,7 @@ export class Order {
             date,
             status
         } = order;   
-        console.log("paymentType", paymentType)
+    
 
         const formattedDate = new Date(date).toLocaleString(); 
 

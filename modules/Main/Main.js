@@ -1,5 +1,3 @@
-import logoImg from "/imgs/sparkle-logo.png"
-
 export class Main { 
     static instance = null;
 
@@ -29,9 +27,6 @@ export class Main {
         this.element.remove();
         this.isMounted = false
     }
-
-    
-    
 }
 
 

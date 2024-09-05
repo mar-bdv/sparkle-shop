@@ -15,6 +15,7 @@ import { ProductCard } from './modules/ProductCard/ProductCard';
 import { productSlider } from './features/ProductSlider/productSlider';
 import { Cart } from './modules/Cart/Cart';
 import { Order } from './features/Order/Order';
+import { HomePage } from './modules/HomePage/HomePage';
 
 
 
@@ -26,28 +27,96 @@ const init = () => {
 
     new Header().mount();
     new Main().mount();
+    // new HomePage().mount() // изменения
     new Footer().mount();
-    
-
 
     router
+        // .on(
+        //     "/", 
+        //     async () => {
+        //         // new Catalog().mount(new Main().element);
+
+        //         // const { products } = await api.getProducts();
+        //         // new ProductList().mount(new Main().element, products);
+        //         // router.updatePageLinks(); 
+        //         new HomePage().mount(new Main().element)
+        //         console.log("home page")
+        //     }, {
+
+        //     leave(done) {
+        //         // new ProductList().unmount();
+        //         // new Catalog().unmount();
+        //         new HomePage().unmount();
+
+        //         done()
+        //     },
+
+        //     already(match) {
+        //         match.route.handler(match);
+        //     },
+        // })
+        // .on(
+        //     "/catalog", 
+        //     async () => {
+        //         new Catalog().mount(new Main().element);
+
+        //         const { products } = await api.getProducts();
+        //         new ProductList().mount(new Main().element, products);
+        //         router.updatePageLinks(); 
+        //     }, {
+
+        //     leave(done) {
+        //         new ProductList().unmount();
+        //         new Catalog().unmount();
+
+        //         done()
+        //     },
+
+        //     already(match) {
+        //         match.route.handler(match);
+        //     },
+        // })        
+
+
         .on(
             "/", 
             async () => {
+                // Создаем и монтируем экземпляр HomePage
+                new HomePage().mount(new Main().element);
+                console.log("Home page loaded");
+            }, {
+    
+            leave(done) {
+                // Демонтируем HomePage при уходе со страницы
+                new HomePage().unmount();
+                done();
+            },
+    
+            already(match) {
+                // Обрабатываем, если страница уже загружена
+                match.route.handler(match);
+            },
+        })
+        .on(
+            "/catalog", 
+            async () => {
+                // Создаем и монтируем экземпляр Catalog
                 new Catalog().mount(new Main().element);
-
+    
+                // Загружаем продукты и монтируем ProductList
                 const { products } = await api.getProducts();
                 new ProductList().mount(new Main().element, products);
+    
                 router.updatePageLinks(); 
             }, {
-
+    
             leave(done) {
+                // Демонтируем Catalog и ProductList при уходе со страницы
                 new ProductList().unmount();
                 new Catalog().unmount();
-
-                done()
+                done();
             },
-
+    
             already(match) {
                 match.route.handler(match);
             },
