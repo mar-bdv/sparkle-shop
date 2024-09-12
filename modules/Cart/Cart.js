@@ -63,40 +63,81 @@ export class Cart {
         this.isMounted = false
     };
 
-    updateCart(productId, quantity) {
+    // рабочая версия
+    // updateCart(productId, quantity) {
+    //     if (quantity === 0) {
+    //         new ApiService().deleteProductFromCart(productId);
+    //         this.cartData.products = this.cartData.products.filter(
+    //             (item) => item.productId !== productId,
+    //         );
+    //     } else {
+    //         new ApiService().updateQuantityProductToCart(productId, quantity);
+    //         this.cartData.products.forEach(item => {
+    //             if (item.productId === productId) {
+    //                 item.quantity = quantity;
+    //             }
+    //         });
+    //     }
+
+    //     this.cartData.totalQuantity = this.cartData.products.reduce(
+    //         (acc, item) => acc + item.quantity,
+    //         0
+    //     );
+
+    //     this.cartData.totalPrice = this.cartData.products.reduce(
+    //         (acc, item) => acc + item.product.price * item.quantity,
+    //         0
+    //     );
+
+    //     console.log("totalQuantity:", this.cartData.totalQuantity);
+    //     console.log("totalPrice:", this.cartData.totalPrice);
+    //     console.log("this.cartData.products:", this.cartData.products);
+
+    //     this.cartPlaceCount.textContent = `${this.cartData.totalQuantity} товара на сумму:`;
+    //     this.cartPlacePrice.innerHTML = `${this.cartData.totalPrice.toLocaleString()}&nbsp;₽`;
+
+    // }
+    async updateCart(productId, quantity) {
         if (quantity === 0) {
-            new ApiService().deleteProductFromCart(productId);
+            await new ApiService().deleteProductFromCart(productId);
             this.cartData.products = this.cartData.products.filter(
-                (item) => item.productId !== productId,
+                (item) => item.productId !== productId
             );
         } else {
-            new ApiService().updateQuantityProductToCart(productId, quantity);
+            await new ApiService().updateQuantityProductToCart(productId, quantity);
             this.cartData.products.forEach(item => {
                 if (item.productId === productId) {
                     item.quantity = quantity;
                 }
             });
         }
-
+    
         this.cartData.totalQuantity = this.cartData.products.reduce(
             (acc, item) => acc + item.quantity,
             0
         );
-
+    
         this.cartData.totalPrice = this.cartData.products.reduce(
             (acc, item) => acc + item.product.price * item.quantity,
             0
         );
-
+    
+        if (this.cartData.products.length === 0) {
+            this.containerElement.innerHTML = '<p class="cart__empty">Корзина пуста, добавьте товары</p>';
+        } else {
+            this.renderProducts();
+            this.renderPlace();
+            this.renderForm();
+        }
+    
         console.log("totalQuantity:", this.cartData.totalQuantity);
         console.log("totalPrice:", this.cartData.totalPrice);
         console.log("this.cartData.products:", this.cartData.products);
-
+    
         this.cartPlaceCount.textContent = `${this.cartData.totalQuantity} товара на сумму:`;
         this.cartPlacePrice.innerHTML = `${this.cartData.totalPrice.toLocaleString()}&nbsp;₽`;
-
     }
-
+    
     renderProducts() {
         const listProducts = this.cartData.products;
         
@@ -231,183 +272,345 @@ export class Cart {
         );
         this.containerElement.append(cartPlace)
     }
-
-
-    renderForm() { 
-            const form = document.createElement('form');
-            form.classList.add('cart__form', 'form-order');
-
-            form.id= "order";
-            form.method="POST";
-            const title = document.createElement("h3");
-            title.classList.add("cart__subtitle", "cart__subtitle_form-order")
-            title.textContent = "Данные для доставки";
-
-            const inputFieldset = document.createElement("fieldset");
-            inputFieldset.classList.add(
-                "form-order__fieldset",
-                "form-order__fieldset_input"
-            )
-
-            const name = document.createElement("input");
-            name.classList.add("form-order__input");
-            name.type = "text";
-            name.name = "name";
-            name.required = true;
-            name.placeholder = "Фамилия Имя Отчество*";
-
-            const phone = document.createElement("input");
-            phone.classList.add("form-order__input");
-            phone.type = "tel";
-            phone.name = "phone";
-            phone.required = true;
-            phone.placeholder = "Телефон*";
-
-            const email = document.createElement("input");
-            email.classList.add("form-order__input");
-            email.type = "email";
-            email.name = "email";
-            email.required = true;
-            email.placeholder = "E-mail*";
-
-            const address = document.createElement("input");
-            address.classList.add("form-order__input");
-            address.type = "text";
-            address.name = "address";
-            address.placeholder = "Адрес Доставки";
-
-            const comments = document.createElement("input");
-            comments.classList.add("form-order__textarea");
-            comments.type = "text";
-            comments.name = "comments";
-            comments.placeholder = "Комментарий к заказу";
-
-            inputFieldset.append(name, phone, email, address, comments);
-
-            const radioDeliveryFieldset = document.createElement("fieldset");
-            radioDeliveryFieldset.classList.add(
-                "form-order__fieldset",
-                "form-order__fieldset_radio"
-            );
-
-            const deliveryLegend = document.createElement("legend");
-            deliveryLegend.classList.add("form-order__legend");
-            deliveryLegend.textContent = "Доставка";
-            
-            const deliveryLabel = document.createElement("label");
-            deliveryLabel.classList.add("form-order__label", "radio");
-            const deliveryLabelTtext = document.createTextNode("Доставка");
-            
-            const deliveryInput = document.createElement("input");
-            deliveryInput.classList.add("radio__input");
-            deliveryInput.type = "radio";
-            deliveryInput.name = "deliveryType";
-            deliveryInput.required = true;
-            deliveryInput.value = "delivery";
-            deliveryInput.checked = true;
-            
-            deliveryLabel.append(deliveryInput, deliveryLabelTtext)
-
-            const pickupLabel = document.createElement("label");
-            pickupLabel.classList.add("form-order__label", "radio");
-            const pickupLabelText = document.createTextNode("Самовывоз");
-
-            const pickupInput = document.createElement("input");
-            pickupInput.classList.add("radio__input");
-            pickupInput.type = "radio";
-            pickupInput.name = "deliveryType";
-            pickupInput.required = true;
-            pickupInput.value = "pickup";
-
-            pickupLabel.append(pickupInput, pickupLabelText)
-            
-
-            const radioPaymentFieldset = document.createElement("fieldset");
-            radioPaymentFieldset.classList.add(
-                "form-order__fieldset",
-                "form-order__fieldset_radio",
-            );
-
-            radioPaymentFieldset.append(deliveryLegend, deliveryLabel, pickupLabel)
-
-            radioPaymentFieldset.addEventListener("change", (e) => {
-                if (e.target === deliveryInput) {
-                    address.disabled = false;
-                } else {
-                    address.disabled = true;
-                    address.value = "";
+    renderForm() {
+        const form = document.createElement('form');
+        form.classList.add('cart__form', 'form-order');
+    
+        form.id = "order";
+        form.method = "POST";
+    
+        const title = document.createElement("h3");
+        title.classList.add("cart__subtitle", "cart__subtitle_form-order");
+        title.textContent = "Данные для доставки";
+    
+        const inputFieldset = document.createElement("fieldset");
+        inputFieldset.classList.add("form-order__fieldset", "form-order__fieldset_input");
+    
+        const name = document.createElement("input");
+        name.classList.add("form-order__input");
+        name.type = "text";
+        name.name = "name";
+        name.required = true;
+        name.placeholder = "Фамилия Имя Отчество*";
+    
+        const phone = document.createElement("input");
+        phone.classList.add("form-order__input");
+        phone.type = "tel";
+        phone.name = "phone";
+        phone.required = true;
+        phone.placeholder = "Телефон*";
+    
+        const email = document.createElement("input");
+        email.classList.add("form-order__input");
+        email.type = "email";
+        email.name = "email";
+        email.required = true;
+        email.placeholder = "E-mail*";
+    
+        const address = document.createElement("input");
+        address.classList.add("form-order__input");
+        address.type = "text";
+        address.name = "address";
+        address.placeholder = "Адрес Доставки";
+    
+        const comments = document.createElement("textarea");
+        comments.classList.add("form-order__textarea");
+        comments.name = "comments";
+        comments.placeholder = "Комментарий к заказу";
+    
+        inputFieldset.append(name, phone, email, address, comments);
+    
+        const radioDeliveryFieldset = document.createElement("fieldset");
+        radioDeliveryFieldset.classList.add("form-order__fieldset", "form-order__fieldset_radio");
+    
+        const deliveryLegend = document.createElement("legend");
+        deliveryLegend.classList.add("form-order__legend");
+        deliveryLegend.textContent = "Доставка";
+    
+        const deliveryLabel = document.createElement("label");
+        deliveryLabel.classList.add("form-order__label", "radio");
+        const deliveryLabelText = document.createTextNode("Доставка");
+    
+        const deliveryInput = document.createElement("input");
+        deliveryInput.classList.add("radio__input");
+        deliveryInput.type = "radio";
+        deliveryInput.name = "deliveryType";
+        deliveryInput.required = true;
+        deliveryInput.value = "delivery";
+        deliveryInput.checked = true;
+    
+        deliveryLabel.append(deliveryInput, deliveryLabelText);
+    
+        const pickupLabel = document.createElement("label");
+        pickupLabel.classList.add("form-order__label", "radio");
+        const pickupLabelText = document.createTextNode("Самовывоз");
+    
+        const pickupInput = document.createElement("input");
+        pickupInput.classList.add("radio__input");
+        pickupInput.type = "radio";
+        pickupInput.name = "deliveryType";
+        pickupInput.required = true;
+        pickupInput.value = "pickup";
+    
+        pickupLabel.append(pickupInput, pickupLabelText);
+    
+        radioDeliveryFieldset.append(deliveryLegend, deliveryLabel, pickupLabel);
+    
+        radioDeliveryFieldset.addEventListener("change", (e) => {
+            if (e.target === deliveryInput) {
+                address.disabled = false;
+            } else {
+                address.disabled = true;
+                address.value = "";
+            }
+        });
+    
+        const radioPaymentFieldset = document.createElement("fieldset");
+        radioPaymentFieldset.classList.add("form-order__fieldset", "form-order__fieldset_radio");
+    
+        const paymentLegend = document.createElement("legend");
+        paymentLegend.classList.add("form-order__legend");
+        paymentLegend.textContent = "Оплата";
+    
+        const cardLabel = document.createElement("label");
+        cardLabel.classList.add("form-order__label", "radio");
+        const cardLabelText = document.createTextNode("Картой при получении");
+    
+        const cardInput = document.createElement("input");
+        cardInput.classList.add("radio__input");
+        cardInput.type = "radio";
+        cardInput.name = "paymentType";
+        cardInput.required = true;
+        cardInput.value = "card";
+    
+        cardLabel.append(cardInput, cardLabelText);
+    
+        const cashLabel = document.createElement("label");
+        cashLabel.classList.add("form-order__label", "radio");
+        const cashLabelText = document.createTextNode("Наличными при получении");
+    
+        const cashInput = document.createElement("input");
+        cashInput.classList.add("radio__input");
+        cashInput.type = "radio";
+        cashInput.name = "paymentType";
+        cashInput.required = true;
+        cashInput.value = "cash";
+    
+        cashLabel.append(cashInput, cashLabelText);
+    
+        radioPaymentFieldset.append(paymentLegend, cardLabel, cashLabel);
+    
+        form.append(
+            title,
+            inputFieldset,
+            radioDeliveryFieldset,
+            radioPaymentFieldset
+        );
+    
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+    
+            const orderData = {
+                name: form.elements.name.value,
+                phone: form.elements.phone.value,
+                email: form.elements.email.value,
+                address: form.elements.address.value,
+                comments: form.elements.comments.value,
+                deliveryType: form.elements.deliveryType.value,
+                paymentType: form.elements.paymentType.value
+            };
+    
+            try {
+                const response = await new ApiService().postOrder(orderData);
+    
+                if (response && response.order) {
+                    router.navigate(`/api/orders/${response.order.id}`);
                 }
-            })
-
-            const paymnetLegend = document.createElement("legend");
-            paymnetLegend.classList.add("form-order__legend");
-            paymnetLegend.textContent = "Оплата";
-
-            const cardLabel = document.createElement("label");
-            cardLabel.classList.add("form-order__label", "radio");
-            const cardLabelText = document.createTextNode("Картой при получении");
-
-            const cardInput = document.createElement("input");
-            cardInput.classList.add("radio__input");
-            cardInput.type = "radio";
-            cardInput.name = "paymentType";
-            cardInput.required = true;
-            cardInput.value = "pickup";
-            cardInput.checked = true;
-
-            cardLabel.append(cardInput, cardLabelText)
-
-            const cashLabel = document.createElement("label");
-            cashLabel.classList.add("form-order__label", "radio");
-            const cashLabelText = document.createTextNode("Наличными при получении");
-
-            const cashInput = document.createElement("input");
-            cashInput.classList.add("radio__input");
-            cashInput.type = "radio";
-            cashInput.name = "paymentType";
-            cashInput.required = true;
-            cashInput.value = "pickup";
-            cashInput.checked = true;
-            
-            cashLabel.append(cashInput, cashLabelText);
-
-            radioPaymentFieldset.append(paymnetLegend, cashLabel, cardLabel)
-
-            form.append(
-                title,
-                inputFieldset,
-                radioDeliveryFieldset,
-                radioPaymentFieldset
-            )
-
-            
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                
-                const orderData = {
-                    name: form.elements.name.value,
-                    phone: form.elements.phone.value,
-                    email: form.elements.email.value,
-                    address: form.elements.address.value,
-                    comments: form.elements.comments.value,
-                    deliveryType: form.elements.deliveryType.value,
-                    paymentType: form.elements.paymentType.value
-                };
-            
-                try {
-                    const response = await new ApiService().postOrder(orderData);
-                    
-                    if (response && response.order) {
-                        router.navigate(`/api/orders/${response.order.id}`);
-                    }
-                } catch (error) {
-                    console.error("Ошибка при создании заказа:", error);
-                }
-            });
-            
-
-
-            this.containerElement.append(form);
+            } catch (error) {
+                console.error("Ошибка при создании заказа:", error);
+            }
+        });
+    
+        this.containerElement.append(form);
     }
-}
+}    
+
+//     renderForm() { 
+//             const form = document.createElement('form');
+//             form.classList.add('cart__form', 'form-order');
+
+//             form.id= "order";
+//             form.method="POST";
+//             const title = document.createElement("h3");
+//             title.classList.add("cart__subtitle", "cart__subtitle_form-order")
+//             title.textContent = "Данные для доставки";
+
+//             const inputFieldset = document.createElement("fieldset");
+//             inputFieldset.classList.add(
+//                 "form-order__fieldset",
+//                 "form-order__fieldset_input"
+//             )
+
+//             const name = document.createElement("input");
+//             name.classList.add("form-order__input");
+//             name.type = "text";
+//             name.name = "name";
+//             name.required = true;
+//             name.placeholder = "Фамилия Имя Отчество*";
+
+//             const phone = document.createElement("input");
+//             phone.classList.add("form-order__input");
+//             phone.type = "tel";
+//             phone.name = "phone";
+//             phone.required = true;
+//             phone.placeholder = "Телефон*";
+
+//             const email = document.createElement("input");
+//             email.classList.add("form-order__input");
+//             email.type = "email";
+//             email.name = "email";
+//             email.required = true;
+//             email.placeholder = "E-mail*";
+
+//             const address = document.createElement("input");
+//             address.classList.add("form-order__input");
+//             address.type = "text";
+//             address.name = "address";
+//             address.placeholder = "Адрес Доставки";
+
+//             const comments = document.createElement("input");
+//             comments.classList.add("form-order__textarea");
+//             comments.type = "text";
+//             comments.name = "comments";
+//             comments.placeholder = "Комментарий к заказу";
+
+//             inputFieldset.append(name, phone, email, address, comments);
+
+//             const radioDeliveryFieldset = document.createElement("fieldset");
+//             radioDeliveryFieldset.classList.add(
+//                 "form-order__fieldset",
+//                 "form-order__fieldset_radio"
+//             );
+
+//             const deliveryLegend = document.createElement("legend");
+//             deliveryLegend.classList.add("form-order__legend");
+//             deliveryLegend.textContent = "Доставка";
+            
+//             const deliveryLabel = document.createElement("label");
+//             deliveryLabel.classList.add("form-order__label", "radio");
+//             const deliveryLabelTtext = document.createTextNode("Доставка");
+            
+//             const deliveryInput = document.createElement("input");
+//             deliveryInput.classList.add("radio__input");
+//             deliveryInput.type = "radio";
+//             deliveryInput.name = "deliveryType";
+//             deliveryInput.required = true;
+//             deliveryInput.value = "delivery";
+//             deliveryInput.checked = true;
+            
+//             deliveryLabel.append(deliveryInput, deliveryLabelTtext)
+
+//             const pickupLabel = document.createElement("label");
+//             pickupLabel.classList.add("form-order__label", "radio");
+//             const pickupLabelText = document.createTextNode("Самовывоз");
+
+//             const pickupInput = document.createElement("input");
+//             pickupInput.classList.add("radio__input");
+//             pickupInput.type = "radio";
+//             pickupInput.name = "deliveryType";
+//             pickupInput.required = true;
+//             pickupInput.value = "pickup";
+
+//             pickupLabel.append(pickupInput, pickupLabelText)
+            
+
+//             const radioPaymentFieldset = document.createElement("fieldset");
+//             radioPaymentFieldset.classList.add(
+//                 "form-order__fieldset",
+//                 "form-order__fieldset_radio",
+//             );
+
+//             radioPaymentFieldset.append(deliveryLegend, deliveryLabel, pickupLabel)
+
+//             radioPaymentFieldset.addEventListener("change", (e) => {
+//                 if (e.target === deliveryInput) {
+//                     address.disabled = false;
+//                 } else {
+//                     address.disabled = true;
+//                     address.value = "";
+//                 }
+//             })
+
+            
+//             const paymnetLegend = document.createElement("legend");
+//             paymnetLegend.classList.add("form-order__legend");
+//             paymnetLegend.textContent = "Оплата";
+
+//             const cardLabel = document.createElement("label");
+//             cardLabel.classList.add("form-order__label", "radio");
+//             const cardLabelText = document.createTextNode("Картой при получении");
+
+//             const cardInput = document.createElement("input");
+//             cardInput.classList.add("radio__input");
+//             cardInput.type = "radio";
+//             cardInput.name = "paymentType";
+//             cardInput.required = true;
+//             cardInput.value = "pickup";
+//             cardInput.checked = true;
+
+//             cardLabel.append(cardInput, cardLabelText)
+
+//             const cashLabel = document.createElement("label");
+//             cashLabel.classList.add("form-order__label", "radio");
+//             const cashLabelText = document.createTextNode("Наличными при получении");
+
+//             const cashInput = document.createElement("input");
+//             cashInput.classList.add("radio__input");
+//             cashInput.type = "radio";
+//             cashInput.name = "paymentType";
+//             cashInput.required = true;
+//             cashInput.value = "pickup";
+//             cashInput.checked = true;
+            
+//             cashLabel.append(cashInput, cashLabelText);
+
+//             radioPaymentFieldset.append(paymnetLegend, cashLabel, cardLabel)
+
+//             form.append(
+//                 title,
+//                 inputFieldset,
+//                 radioDeliveryFieldset,
+//                 radioPaymentFieldset
+//             )
+
+            
+//             form.addEventListener('submit', async (e) => {
+//                 e.preventDefault();
+                
+//                 const orderData = {
+//                     name: form.elements.name.value,
+//                     phone: form.elements.phone.value,
+//                     email: form.elements.email.value,
+//                     address: form.elements.address.value,
+//                     comments: form.elements.comments.value,
+//                     deliveryType: form.elements.deliveryType.value,
+//                     paymentType: form.elements.paymentType.value
+//                 };
+            
+//                 try {
+//                     const response = await new ApiService().postOrder(orderData);
+                    
+//                     if (response && response.order) {
+//                         router.navigate(`/api/orders/${response.order.id}`);
+//                     }
+//                 } catch (error) {
+//                     console.error("Ошибка при создании заказа:", error);
+//                 }
+//             });
+            
+
+
+//             this.containerElement.append(form);
+//     }
+// }
 

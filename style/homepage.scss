@@ -26,16 +26,26 @@
     color: #fff;
     text-align: center;
 
-    &__heading {
-        font-size: 4rem; // Размер заголовка
-        font-weight: bold;
-        margin-bottom: 1rem;
-        text-transform: lowercase; // Преобразование текста в нижний регистр
+    // &__heading {
+    //     font-size: 4rem; // Размер заголовка
+    //     font-weight: bold;
+    //     margin-bottom: 1rem;
+    //     text-transform: lowercase; // Преобразование текста в нижний регистр
+    // }
+
+    &__image {
+        display: block;
+        width: 300px;
+        margin: 0 auto; /* Центрирование по горизонтали */
+        max-width: 100%; /* Масштабирование изображения под размеры контейнера */
+        height: auto;
+        margin-bottom: 15px;
     }
 
     &__quote {
-        font-size: 1.5rem;
+        font-size: 20px;
         margin-bottom: 2rem;
+        font-weight: 300;
     }
 
     &__buttons {
@@ -44,18 +54,17 @@
         align-items: center;
 
         .content__btn {
-        background-color: #A60000; // Цвет фона кнопки
+        background-color: #882335; // Цвет фона кнопки
         color: #fff;
         padding: 1rem 2rem;
         font-size: 1rem;
         border: none;
-        border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s;
         text-transform: uppercase;
 
         &:hover {
-            background-color: #870000; // Цвет кнопки при наведении
+            background-color: #882335; // Цвет кнопки при наведении
         }
 
         a {
@@ -65,20 +74,21 @@
         }
 
         .content__pause {
-        margin-top: 1rem;
-        background-color: transparent;
-        color: #fff;
-        font-size: 1rem;
-        border: 1px solid #fff;
-        padding: 0.5rem 1rem;
-        cursor: pointer;
-        transition: background-color 0.3s, color 0.3s;
+            margin-top: 16px;
+            margin-bottom: 10px;
+            background-color: transparent;
+            color: #fff;
+            font-size: 16px;
+            border: 1px solid #fff;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
 
-        &:hover {
-            background-color: #fff;
-            color: #A60000;
-        }
-        }
+            &:hover {
+                background-color: #fff;
+                color: #882335;
+            }
+            }
     }
 }
 

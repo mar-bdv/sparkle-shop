@@ -1,3 +1,4 @@
+import { router } from "../../main";
 import { addContainer } from "../../modules/addContainer";
 
 export class Order {
@@ -104,11 +105,11 @@ export class Order {
                     </tr>
                     <tr class="table__row">
                         <td class="table__field">Способ получения</td>
-                        <td class="table__value">${deliveryType === 'pickup' ? 'забрать' : 'доставка'}</td>
+                        <td class="table__value">${deliveryType === 'pickup' ? 'Самовывоз' : 'Доставка'}</td>
                     </tr>
                     <tr class="table__row">
                         <td class="table__field">Способ оплаты</td>
-                        <td class="table__value">${paymentType}</td>
+                        <td class="table__value">${paymentType === 'card' ? 'Картой при получении': 'Наличными при получении'}</td>
                     </tr>
                     
                 </table>
@@ -129,7 +130,7 @@ export class Order {
                     }).join('')}
                 </ul>
                 <div class="order__buttons">
-                    <button class="order__btn" type="button">На главную</button>
+                    <button class="order__btn order__btn-home" type="button">На главную</button>
                 </div>
             </div>
         `;

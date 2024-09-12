@@ -39,7 +39,7 @@ export class ApiService  {
                 this.accessKeyService.delete();
                 return this.getData(pathname, params, useSearch);
             } else {
-                console.error("Ошибка при получении данных:", error);
+                console.log("Ошибка при получении данных:");
             }
         }
     }

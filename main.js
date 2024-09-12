@@ -24,71 +24,31 @@ export const router = new Navigo("/", { linksSelector: 'a[href^="/"]' })
 const init = () => {
     const api = new ApiService();
 
-
     new Header().mount();
+    console.log("Header mounted");
+
     new Main().mount();
+    console.log("Main mounted");
+
     // new HomePage().mount() // изменения
     new Footer().mount();
+    console.log("Footer mounted");
 
     router
-        // .on(
-        //     "/", 
-        //     async () => {
-        //         // new Catalog().mount(new Main().element);
-
-        //         // const { products } = await api.getProducts();
-        //         // new ProductList().mount(new Main().element, products);
-        //         // router.updatePageLinks(); 
-        //         new HomePage().mount(new Main().element)
-        //         console.log("home page")
-        //     }, {
-
-        //     leave(done) {
-        //         // new ProductList().unmount();
-        //         // new Catalog().unmount();
-        //         new HomePage().unmount();
-
-        //         done()
-        //     },
-
-        //     already(match) {
-        //         match.route.handler(match);
-        //     },
-        // })
-        // .on(
-        //     "/catalog", 
-        //     async () => {
-        //         new Catalog().mount(new Main().element);
-
-        //         const { products } = await api.getProducts();
-        //         new ProductList().mount(new Main().element, products);
-        //         router.updatePageLinks(); 
-        //     }, {
-
-        //     leave(done) {
-        //         new ProductList().unmount();
-        //         new Catalog().unmount();
-
-        //         done()
-        //     },
-
-        //     already(match) {
-        //         match.route.handler(match);
-        //     },
-        // })        
-
-
         .on(
             "/", 
             async () => {
                 // Создаем и монтируем экземпляр HomePage
                 new HomePage().mount(new Main().element);
                 console.log("Home page loaded");
-            }, {
-    
+                router.updatePageLinks();
+                
+            }, 
+            {
             leave(done) {
                 // Демонтируем HomePage при уходе со страницы
                 new HomePage().unmount();
+                console.log("HomePage unmounted");
                 done();
             },
     
@@ -98,30 +58,35 @@ const init = () => {
             },
         })
         .on(
-            "/catalog", 
+            "/catalog",
             async () => {
-                // Создаем и монтируем экземпляр Catalog
-                new Catalog().mount(new Main().element);
-    
-                // Загружаем продукты и монтируем ProductList
-                const { products } = await api.getProducts();
+                console.log("Переход на каталог");
+                history.replaceState(null, null, window.location.href); // Заменяем текущее состояние
+            
+                const catalogInstance = new Catalog();
+                if (!catalogInstance.isMounted) {
+                    console.log("Каталог не смонтирован, монтируем.");
+                    await catalogInstance.mount(new Main().element);
+                }
+            
+                console.log("Запрашиваем товары из API.");
+                const { products } = await new ApiService().getProducts();
+                console.log("Получены товары:", products);
+            
                 new ProductList().mount(new Main().element, products);
-    
-                router.updatePageLinks(); 
-            }, {
-    
+            
+                console.log("Обновление ссылок на странице");
+                router.updatePageLinks();
+        }, {
             leave(done) {
-                // Демонтируем Catalog и ProductList при уходе со страницы
+                console.log("Выход из маршрута /catalog, очистка элементов.");
                 new ProductList().unmount();
                 new Catalog().unmount();
                 done();
-            },
-    
-            already(match) {
-                match.route.handler(match);
-            },
+            }
         })
 
+        
         .on("/category", async ({ params: { slug, page = 1 } }) => {
             (await new Catalog().mount(new Main().element)).setActiveLink(slug);
                 const response = await api.getProducts({
@@ -137,25 +102,18 @@ const init = () => {
                 new ProductList().mount(new Main().element, filteredProducts, slug);
             
                 //  КОД ДЛЯ ТОГО, ЧТОБЫ ПАГИНАЦИЯ ОТОБРАЖАЛАСЬ ТОЛЬКО КОГДА totalProducts больше, чем limit
-                console.log("MAIN JS", pagination[slug].totalProducts, pagination[slug].limit)
+                console.log("MAIN JS",
+                    pagination[slug],
+                    pagination[slug].totalProducts, pagination[slug].limit
+                )
 
                 if (pagination[slug].totalProducts > pagination[slug].limit) {
-                    
                     new Pagination()
                     .mount(new ProductList().containerElement)
                     .update(pagination[slug]);
                     
                 }
             
-                //     new Pagination()
-                //     .mount(new ProductList().containerElement)
-                //     .update(pagination[slug]);
-                // }
-                
-                // new Pagination()
-                // .mount(new ProductList().containerElement)
-                // .update(pagination[slug]);
-        
 
                 router.updatePageLinks();
         
@@ -171,165 +129,105 @@ const init = () => {
                 match.route.handler(match);
             }
         })
-        
-        // // Endpoint для получения продуктов по категории с пагинацией
-        // .on("/category", async ({ params: { slug, page = 1 } }) => {
-        //     new Catalog().mount(new Main().element);
-        //     try {
-        //         const response = await api.getProducts({
-        //             category: slug,
-        //             page: page,
-        //         });
-        
-        //         const { products, pagination } = response;
-        //         console.log("productS", products);
-        //         console.log("pagination", pagination);
-        
+        // .on(
+        //     "/category", 
+        //     async ({ params: { slug, page = 1 } }) => {
+        //       // Монтируем каталог
+        //         const catalogInstance = await new Catalog().mount(new Main().element);
+        //         catalogInstance.setActiveLink(slug);
+            
+        //         // Загрузка данных с сервера (продукты и пагинация)
+        //         const response = await api.getProducts({ category: slug, page: page });
+                
+        //         const { products, currentPage, totalPages, totalProducts } = response;
+
+        //         // Фильтруем продукты по категории, если необходимо
         //         const filteredProducts = products.filter(product => product.category === slug);
-        
+            
+        //         // Монтируем хлебные крошки
         //         new BreadCrumbs().mount(new Main().element, [{ text: slug }]);
-        //         new ProductList().mount(new Main().element, filteredProducts, slug);
-        //         if (pagination && pagination[slug]) {
+            
+        //         // Обновляем список товаров
+        //         const productList = new ProductList();
+        //         productList.unmount(); // Удаляем предыдущий список товаров
+        //         productList.mount(new Main().element, filteredProducts, slug); // Монтируем новый список
+            
+        //         // Отображение пагинации при необходимости
+                
         //             new Pagination()
         //                 .mount(new ProductList().containerElement)
-        //                 .update(pagination[slug]);
-        //         }
-        
-        //         router.updatePageLinks();
-        //     } catch (error) {
-        //         console.error("Failed to fetch products:", error);
-        //     }
-        // }, {
-        //     leave(done) {
-        //         new BreadCrumbs().unmount();
-        //         new ProductList().unmount();
-        //         new Catalog().unmount();
-        //         done();
-        //     }
-        // })
-        
-
-        .on("/favorite", async ({ params }) => {
-            new Catalog().mount(new Main().element);
-            const favorite = new FavoriteService().get();
-            const displayEmptyMessage = () => new ProductList().mount(new Main().element, [], 'Избранное', 'Вы ничего не добавили в избранное, пожалуйста, добавьте что-нибудь');
-
-            // Проверка, что favorite - массив
-            if (!Array.isArray(favorite) || favorite.length === 0) {
-                displayEmptyMessage();
-            } else {
-                try {
-                    const { products, pagination } = await api.getProducts({ 
-                        id: favorite ,
-                        page: params?.page || 1
-                    });
-                    
-                    console.log('Products:', products); // Логируем полученные товары
+        //                 .update({
+        //                 currentPage: currentPage,
+        //                 totalPages: totalPages
+        //             });
+                
             
-                    // Проверка, что products - массив
-                    if (!Array.isArray(products)) {
-                        throw new Error('Expected products to be an array but got:', products);
-                    }
-                    new BreadCrumbs().mount(new Main().element, [{ text: 'Избранное' }]);
-                    new ProductList().mount(new Main().element, products, 
-                    'Избранное', 'Вы ничего не добавили в избранное, пожалуйста, добавьте что-нибудь');
-
-                /*  КОД ДЛЯ ТОГО, ЧТОБЫ ПАГИНАЦИЯ ОТОБРАЖАЛАСЬ ТОЛЬКО КОГДА totalProducts больше, чем limit
-                // console.log(pagination[slug]?.totalProducts, pagination[slug]?.limit)
-                // if (pagination[slug].totalProducts > pagination[slug].limit) {
-                //     new Pagination()
-                //     .mount(new ProductList().containerElement)
-                //     .update(pagination[slug]);
-                // }
-                */
-
-                    if (favorite.length > 0) {
-                        new Pagination()
-                        .mount(new ProductList().containerElement)
-                        .update(pagination)
-                    };
-                } catch (error) {
-                    console.error('Error fetching products:', error);
-                }
-            }
-
-        router.updatePageLinks();
-        }, {
-            leave(done) {
-                new ProductList().unmount();
-                new Catalog().unmount();
-                new BreadCrumbs().unmount();
-                done();
-            },
-            already(match) {
-                match.route.handler(match);
-            }
-        })
-
-        // .on("/search", async ({ params }) => {
-        //     console.log("Search")
-        //     console.log("PARAMS:", params)
-        //     new Catalog().mount(new Main().element);
-        //     // const displayEmptyMessage = () => new ProductList().mount(new Main().element, [], 'Избранное', 'Вы ничего не добавили в избранное, пожалуйста, добавьте что-нибудь');
-
-        //     try {
-        //         const { products, pagination } = await api.getProducts({ 
-        //             q: params.q,
-        //         });
-                
-        //         console.log('Products:', products); // Логируем полученные товары
-        
-        //         // Проверка, что products - массив
-        //         if (!Array.isArray(products)) {
-        //             throw new Error('Expected products to be an array but got:', products);
-        //         }
-        //         new BreadCrumbs().mount(new Main().element, [{ text: 'Избранное' }]);
-        //         new ProductList().mount(new Main().element, products, 
-        //         'Избранное', 'Вы ничего не добавили в избранное, пожалуйста, добавьте что-нибудь');
-                
-        //         new Pagination()
-        //         .mount(new ProductList().containerElement).update(pagination);
-        //     } catch (error) {
-        //         console.error('Error fetching products:', error);
-        //     }
-    
-
-        // router.updatePageLinks();
-        // }, {
-        //     leave(done) {
+        //         router.updatePageLinks();
+        //     },
+        //     {
+        //         leave(done) {
+        //         new BreadCrumbs().unmount();
         //         new ProductList().unmount();
         //         new Catalog().unmount();
-        //         new BreadCrumbs().unmount();
         //         done();
-        //     },
-        //     already(match) {
+        //         },
+        //         already(match) {
         //         match.route.handler(match);
+        //         }
         //     }
-        // })
-        .on("/search", async ({ params: { q } }) => {
-            try {
+        //    )
+            
+        
+
+        .on(
+            "/favorite",
+            async ({ params }) => {
                 new Catalog().mount(new Main().element);
-                const { products, pagination } = await api.getSearchProducts(
-                    { q }
-                );
-                console.log("/search PRODUCTS", { q })
-                new BreadCrumbs().mount(new Main().element, [{ text: "Поиск" }]);
-                new ProductList().mount(
-                    new Main().element,
-                    products,
-                    `Поиск: ${q}`,
-                    `Ничего не найдено по вашему запросу "${q}"`
-                );
-                if (pagination?.totalProducts > pagination?.limit) {
-                    new Pagination()
-                        .mount(new ProductList().containerElement)
-                        .update(pagination);
+                
+                const favorite = new FavoriteService().get();
+                const displayEmptyMessage = () => new ProductList().mount(new Main().element, [], 'Избранное', 'Вы ничего не добавили в избранное, пожалуйста, добавьте что-нибудь');
+
+                // Проверка, что favorite - массив
+                if (!Array.isArray(favorite) || favorite.length === 0) {
+                    displayEmptyMessage();
+                } else {
+                    try {
+                        const { products, pagination } = await api.getProducts({ 
+                            id: favorite,
+                            page: params?.page || 1
+                        });
+                        
+                        console.log('Products:', products); // Логируем полученные товары
+                
+                        // Проверка, что products - массив
+                        if (!Array.isArray(products)) {
+                            throw new Error('Expected products to be an array but got:', products);
+                        }
+                        new BreadCrumbs().mount(new Main().element, [{ text: 'Избранное' }]);
+                        new ProductList().mount(new Main().element, products, 
+                        'Избранное', 'Вы ничего не добавили в избранное, пожалуйста, добавьте что-нибудь');
+
+                    /*  КОД ДЛЯ ТОГО, ЧТОБЫ ПАГИНАЦИЯ ОТОБРАЖАЛАСЬ ТОЛЬКО КОГДА totalProducts больше, чем limit
+                    // console.log(pagination[slug]?.totalProducts, pagination[slug]?.limit)
+                    // if (pagination[slug].totalProducts > pagination[slug].limit) {
+                    //     new Pagination()
+                    //     .mount(new ProductList().containerElement)
+                    //     .update(pagination[slug]);
+                    // }
+                    */
+
+                        if (favorite.length > 0) {
+                            new Pagination()
+                            .mount(new ProductList().containerElement)
+                            .update(pagination)
+                        };
+                    } catch (error) {
+                        console.error('Error fetching products:', error);
+                    }
                 }
+
                 router.updatePageLinks();
-            } catch (error) {
-                console.error("Ошибка при поиске товаров:", error);
-            }
-        }, {
+            }, {
             leave(done) {
                 new BreadCrumbs().unmount();
                 new ProductList().unmount();
@@ -340,8 +238,69 @@ const init = () => {
                 match.route.handler(match);
             }
         })
-
+    
+        .on(
+            "/search",
+            async ({ params: { q } }) => {
+                try {
+                    const mainElement = new Main().element;
         
+                    // Монтирование каталога
+                    new Catalog().mount(mainElement);
+        
+                    // Запрос на получение товаров
+                    const { products, pagination } = await api.getSearchProducts({ q });
+        
+                    // Монтирование хлебных крошек
+                    new BreadCrumbs().mount(mainElement, [{ text: "Поиск" }]);
+        
+                    // Проверка, найдены ли товары
+                    if (products.length === 0) {
+                        throw new Error(`Ничего не найдено по вашему запросу "${q}"`);
+                    }
+        
+                    // Монтирование списка продуктов
+                    new ProductList().mount(
+                        mainElement,
+                        products,
+                        `Поиск: ${q}`,
+                        `Ничего не найдено по вашему запросу "${q}"`
+                    );
+        
+                    // Обновление и монтирование пагинации, если нужно
+                    if (pagination?.totalProducts > pagination?.limit) {
+                        new Pagination()
+                            .mount(new ProductList().containerElement)
+                            .update(pagination);
+                    }
+        
+                    // Обновление ссылок на странице
+                    router.updatePageLinks();
+        
+                }  catch (error) {
+                    console.error("Ошибка при выполнении поиска:", error);
+                    new ProductList().mount(
+                        new Main().element,
+                        [],
+                        `Ошибка:`,
+                        error?.response?.data?.error || `Не удалось выполнить поиск по запросу "${q}"`
+                    );
+                }
+            },
+            {
+                leave(done) {
+                    new BreadCrumbs().unmount();
+                    new ProductList().unmount();
+                    new Catalog().unmount();
+                    done();
+                },
+                already(match) {
+                    match.route.handler(match);
+                },
+            },
+        )
+        
+
         .on("/product/:id", async (obj) => {
             console.log("Route object:", obj);
             console.log("Product ID:", obj.data.id);
@@ -391,59 +350,7 @@ const init = () => {
                 done();
             }
         })
-        // .on("/order/:id", ({data: { id }}) => {
-        //     console.log(`order: ${id}`);
-
-        //     api.getOrder(id).then(data => {
-        //         console.log(data)
-        //     })
-        // })
-
-        // .on("/api/orders/:id", async ({ data: { id } }) => { //ПОМЕНЯЛА НА api/orders CHAT GPT
-        //     try {
-        //         console.log("api/orders/id -", id)
-        //         // Показываем индикатор загрузки, пока данные загружаются
-        //         const mainElement = new Main().element;
-        //         mainElement.innerHTML = '<div class="loading">Загрузка заказа...</div>';
         
-        //         // Получаем данные заказа по ID
-        //         const orderData = await api.getOrder(id);
-        
-        //         if (!orderData) {
-        //             // Если заказ не найден, показываем сообщение об ошибке
-        //             mainElement.innerHTML = `
-        //                 <div class="not-found">
-        //                     <h2>Заказ не найден</h2>
-        //                     <p>Проверьте правильность номера заказа или <a href="/">вернитесь на главную страницу</a>.</p>
-        //                 </div>
-        //             `;
-        //             return;
-        //         }
-        
-        //         // Монтируем компонент Order с полученными данными
-        //         new Order().mount(mainElement, orderData);
-        
-        //         // Обновляем ссылки маршрутизатора, если это необходимо
-        //         router.updatePageLinks();
-        //     } catch (error) {
-        //         console.error('Ошибка при получении данных заказа:', error);
-        //         mainElement.innerHTML = `
-        //             <div class="error">
-        //                 <h2>Произошла ошибка</h2>
-        //                 <p>Не удалось загрузить данные заказа. Пожалуйста, попробуйте позже.</p>
-        //             </div>
-        //         `;
-        //     }
-        // }, {
-        //     leave(done) {
-        //         // Размонтируем компонент Order при уходе с маршрута
-        //         new Order().unmount();
-        //         done();
-        //     },
-        //     already(match) {
-        //         match.route.handler(match);
-        //     }
-        // })
         .on("/api/orders/:id", async ({ data: { id } }) => {
             try {
                 console.log("api/orders/id -", id);
@@ -520,22 +427,3 @@ const init = () => {
 
 init();
 
-
-// // Get the video
-// let video = document.getElementById("myVideo");
-
-// // Get the button
-// let btn = document.getElementById("myBtn");
-
-// btn.addEventListener("click", myFunction)
-
-// // Pause and play the video, and change the button text
-// function myFunction() {
-//     if (video.paused) {
-//         video.play();
-//         btn.innerHTML = "остановить видео";
-//     } else {
-//         video.pause();
-//         btn.innerHTML = "включить видео";
-//     }
-// }

@@ -1,4 +1,4 @@
-import logoImg from '/imgs/sparkle-logo.png';
+import logoImg from '/imgs/sparkle-logo-dark.png';
 
 
 

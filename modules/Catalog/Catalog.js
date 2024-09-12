@@ -106,9 +106,17 @@ export class Catalog {
     }
 
     async getData() {
-        if (!this.catalogData) {
-            this.catalogData = await new ApiService().getProductCategories();
+        try {
+            if (!this.catalogData) {
+                this.catalogData = await new ApiService().getProductCategories();
+            }
+        } catch (error) {
+            console.error('Error loading categories:', error);
+            this.catalogData = { products: [] }; // или любое сообщение об ошибке
         }
+        // if (!this.catalogData) {
+        //     this.catalogData = await new ApiService().getProductCategories();
+        // }
     }
 
     // async mount(parent) {
@@ -130,31 +138,52 @@ export class Catalog {
     //     this.isMounted = false;
     // }
 
+    // async mount(parent) {
+
+    //     if (this.isMounted) {
+    //         return this;
+    //     }
+    //     this.isMounted = true; // Ставим флаг сразу, чтобы избежать повторного вызова
+    
+    //     if(!this.catalogData) {
+    //         await this.getData();
+
+    //         this.renderListElem(this.catalogData);
+    //     }
+        
+    //     parent.prepend(this.element);
+    //     return this;
+    // }
     async mount(parent) {
         if (this.isMounted) {
             return this;
         }
+        this.isMounted = true;
     
-        this.isMounted = true; // Ставим флаг сразу, чтобы избежать повторного вызова
+        await this.getData();
+        this.renderListElem(this.catalogData);
     
-        if(!this.catalogData) {
-            await this.getData();
-            this.renderListElem(this.catalogData);
-        }
-        
         parent.prepend(this.element);
         return this;
     }
     
     unmount() {
-        if (!this.isMounted) return;
+        // if (!this.isMounted) return;
     
-        this.element.innerHTML = ''; // Очистим контент
-        this.element.remove(); // Удалим сам элемент
+        // this.element.innerHTML = ''; // Очистим контент
+        // this.element.remove(); // Удалим сам элемент
+        // this.isMounted = false;  
+        if (!this.isMounted) return;
+
+        this.containerElement.innerHTML = ''; // Очистка контейнера при демонтировании
+        this.element.remove(); // Удаление элемента
         this.isMounted = false;
     }
 
     renderListElem({products}) {
+        this.containerElement.innerHTML = ''; // Очистка контейнера перед отрисовкой
+
+
         if (this.element.querySelector(".catalog__list")) return; // Проверяем, если список уже есть, не рендерим его снова
 
         const listElem = document.createElement('ul');
