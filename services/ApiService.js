@@ -49,13 +49,11 @@ export class ApiService  {
     }
     
     async getSearchProducts(params) {
-        console.log("params:", params);
         return await this.getData('/search', params, true);
     }
     
 
     async getProductCategories(category) {
-        console.log("getProductCategories getProductCategories")
         return await this.getData('api/products');
 
     }
@@ -78,9 +76,7 @@ export class ApiService  {
                 }
             });
 
-            if (response.status === 200) {
-                console.log("Товар успешно добавлен в корзину");
-            }
+        
 
             return response.data;
         } catch (error) {
@@ -117,9 +113,6 @@ export class ApiService  {
     }
 
     async deleteProductFromCart(id) {
-
-        console.log(id)
-
         try {
             const response = await axios.delete(
                 `${this.#apiUrl}/api/cart/products/${id}`, 
@@ -149,10 +142,6 @@ export class ApiService  {
                     Authorization: `Bearer ${this.accessKey}`,
                 }
             });
-
-            if (response.status === 200) {
-                console.log("Товар успешно добавлен в корзину");
-            }
 
             return response.data;
         } catch (error) {

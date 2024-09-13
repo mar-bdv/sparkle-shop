@@ -21,8 +21,6 @@ export class Order {
             return;
         }
 
-        console.log("Mounting order with ID:", orderId); 
-
         this.containerElement.innerHTML = "";
 
         const { orders } = orderData;
@@ -78,7 +76,7 @@ export class Order {
         return `
             <div class="order__header">
                 <h4 class="order__header-title">Заказ успешно размещен</h4>
-                <p class="order__header-price">${totalPrice} ₽</p>
+                <p class="order__header-price">${totalPrice.toLocaleString()} ₽</p>
             </div>
             <div class="order__number">
                 <p class="order__number-ordering">№${id}</p>

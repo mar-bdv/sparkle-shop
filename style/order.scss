@@ -3,6 +3,11 @@
     display: flex;
     justify-content: center;
 
+    &__product-item {
+        margin: 5px;
+    }
+
+ 
 
     &__container {
         max-width: 832px;
@@ -43,7 +48,6 @@
 
     &__header-title {
         margin: 0px;
-        // font-size: 20px;
         font-weight: 400;
 
         @media (min-width: 580px) {
@@ -53,6 +57,10 @@
         @media (min-width: 820px) {
             font-size: 20px;
         }
+    }
+
+    &__header-price {
+        font-size: 20px;
     }
 
     
@@ -104,4 +112,5 @@
         border-color: #751d2d;
         }
     }
+    
 }

@@ -28,6 +28,8 @@ export class Card {
         img.classList.add('card__img');
         img.src = `${this.image}`;
         img.alt = this.title;
+        img.loading = "lazy"; 
+
         link.append(img);
 
         const info = document.createElement('div');

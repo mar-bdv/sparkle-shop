@@ -1,43 +1,33 @@
-// Стили для основного контейнера
 .container__homepage {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; // Видео растягивается на всю высоту окна браузера
+    height: 100vh; 
     position: relative;
     text-align: center;
     overflow: hidden;
 
-    // Стили для видео
     video#myVideo {
         position: absolute;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        object-fit: cover; // Видео растягивается и обрезается, сохраняя соотношение сторон
+        object-fit: cover; 
         z-index: -1;
     }
 }
 
-  // Стили для контента внутри контейнера
 .content {
     z-index: 1;
     color: #fff;
     text-align: center;
 
-    // &__heading {
-    //     font-size: 4rem; // Размер заголовка
-    //     font-weight: bold;
-    //     margin-bottom: 1rem;
-    //     text-transform: lowercase; // Преобразование текста в нижний регистр
-    // }
-
     &__image {
         display: block;
         width: 300px;
-        margin: 0 auto; /* Центрирование по горизонтали */
-        max-width: 100%; /* Масштабирование изображения под размеры контейнера */
+        margin: 0 auto; 
+        max-width: 100%; 
         height: auto;
         margin-bottom: 15px;
     }
@@ -54,7 +44,7 @@
         align-items: center;
 
         .content__btn {
-        background-color: #882335; // Цвет фона кнопки
+        background-color: #882335;
         color: #fff;
         padding: 1rem 2rem;
         font-size: 1rem;
@@ -64,7 +54,7 @@
         text-transform: uppercase;
 
         &:hover {
-            background-color: #882335; // Цвет кнопки при наведении
+            background-color: #882335; 
         }
 
         a {
@@ -92,70 +82,3 @@
     }
 }
 
-
-// .main {
-//     position: relative;
-//     width: 100%;
-//     height: 100vh;
-//     overflow: hidden;
-
-//     #myVideo {
-//         position: absolute;
-//         top: 0;
-//         left: 0;
-//         width: 100%;
-//         height: 100%;
-//         object-fit: cover;
-//         z-index: -1;
-//     }
-
-//     .content {
-//         position: absolute;
-//         top: 50%;
-//         left: 50%;
-//         transform: translate(-50%, -50%);
-//         text-align: center;
-//         color: #fff;
-
-//         &__heading {
-//         font-family: 'Times New Roman', serif;
-//         font-size: 4rem;
-//         font-weight: bold;
-//         margin: 0;
-//         }
-
-//         &__quote {
-//         font-family: 'Arial', sans-serif;
-//         font-size: 1.2rem;
-//         margin: 10px 0;
-//         font-weight: 300;
-//         }
-
-//         &__buttons {
-//         margin-top: 20px;
-
-//         .content__btn {
-//             background-color: #a73434;
-//             color: #fff;
-//             padding: 10px 20px;
-//             border: none;
-//             font-size: 1rem;
-//             cursor: pointer;
-//             transition: background-color 0.3s;
-
-//             a {
-//             color: #fff;
-//             text-decoration: none;
-//             }
-
-//             &:hover {
-//             background-color: #8a2c2c;
-//             }
-//         }
-
-//         .content__pause {
-//             display: none;
-//         }
-//         }
-//     }
-// }
