@@ -85,7 +85,9 @@ export class Cart {
             (acc, item) => acc + item.product.price * item.quantity,
             0
         );
-    
+        
+        this.containerElement.innerHTML = ''; // Очищаем контейнер перед перерендером
+
         if (this.cartData.products.length === 0) {
             this.containerElement.innerHTML = '<p class="cart__empty">Корзина пуста, добавьте товары</p>';
         } else {

@@ -16,7 +16,7 @@ export class CartButton {
 
         button.addEventListener('click', async () => {
             const  { cart: { totalQuantity } } 
-                = await new ApiService().postProductToCard(id);
+                = await new ApiService().postProductToCart(id);
             new Header().changeCount(totalQuantity)
         })
 

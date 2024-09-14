@@ -59,13 +59,10 @@ export class ApiService  {
     }
 
     async getProductById(id) {
-    
         return await this.getData(`/products/${id}`);
     }
 
-    async postProductToCard(productId, quantity = 1) {
-
-
+    async postProductToCart(productId, quantity = 1) {
         try {
             const response = await axios.post(`${this.#apiUrl}/api/cart/products`, {
                 productId,
@@ -76,8 +73,6 @@ export class ApiService  {
                 }
             });
 
-        
-
             return response.data;
         } catch (error) {
             console.log("apiService err:", error)
@@ -85,7 +80,6 @@ export class ApiService  {
     }
 
     async updateQuantityProductToCart(productId, quantity) {
-
         try {
             const response = await axios.put(
                 `${this.#apiUrl}/api/cart/products/${productId}`, 

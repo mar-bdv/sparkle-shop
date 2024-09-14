@@ -29,8 +29,6 @@ export class LikeButton {
 
         button.innerHTML = likeSvg();
 
-
-
         return button;
     }
 }
