@@ -9,6 +9,8 @@ export class CartButton {
         this.withIcon = withIcon; 
     }
 
+    
+
     create(id) {
         const button = document.createElement('button');
         button.classList.add(this.className);

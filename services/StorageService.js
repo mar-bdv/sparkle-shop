@@ -1,5 +1,6 @@
-class StorageService {
-    constructor (key) {
+
+export class StorageService {
+    constructor(key) {
         this.key = key;
     }
 
@@ -17,10 +18,10 @@ class StorageService {
         }
         localStorage.setItem(this.key, data);
     }
+
     delete() {
         localStorage.removeItem(this.key);
     }
-
 }
 
 export class FavoriteService extends StorageService {
@@ -69,15 +70,26 @@ export class FavoriteService extends StorageService {
 
 }
 
-export class AccessKeyService extends StorageService {
+export class AccessKeyService {
     static instance;
-    constructor (key = 'accessKey') {
+    constructor() {
         if (!AccessKeyService.instance) {
-            super(key);
+            this.accessKeyKey = 'accessKey';
             AccessKeyService.instance = this;
         }
-
         return AccessKeyService.instance;
+    }
 
+    getAccessKey() {
+        return localStorage.getItem(this.accessKeyKey);
+    }
+
+
+    set(accessKey) {
+        localStorage.setItem(this.accessKeyKey, accessKey);
+    }
+
+    clear() {
+        localStorage.removeItem(this.accessKeyKey);
     }
 }

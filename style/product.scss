@@ -10,10 +10,11 @@
     }
 
     &__container {
+        margin-bottom: 25px;
         @media (min-width: 820px) {
-        display: grid;
-        grid-template-columns: 66% 1fr;
-        gap: 40px 16px;
+            display: grid;
+            grid-template-columns: 66% 1fr;
+            gap: 40px 16px;
         }
     }
 
