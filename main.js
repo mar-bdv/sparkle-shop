@@ -11,7 +11,7 @@ import { Catalog } from './modules/Catalog/Catalog';
 import { FavoriteService } from './services/StorageService';
 import { BreadCrumbs } from './features/BreadCrumbs/BreadCrumbs';
 import { ProductCard } from './modules/ProductCard/ProductCard';
-import { productSlider } from './features/ProductSlider/productSlider';
+import { productSlider } from './features/productSlider/productSlider';
 import { Cart } from './modules/Cart/Cart';
 import { Order } from './features/Order/Order';
 import { HomePage } from './modules/HomePage/HomePage';
