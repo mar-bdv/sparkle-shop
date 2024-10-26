@@ -1,5 +1,5 @@
 # Jewerly Shop - "sparkle shop"
-**Sparkle Shop is a demo e-commerce project built using modern web technologies. The project demonstrates responsive design, dynamic content generation, and interaction with APIs for user authentication and order management.**
+**Sparkle Shop is a demo e-commerce project built using modern web technologies. The project demonstrates dynamic content generation and interaction with APIs for user authentication and order management.**
 
 ## Key Features
 - Responsive layout based on a Figma design, styled with SCSS
