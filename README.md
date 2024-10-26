@@ -12,4 +12,3 @@
 - SCSS — for styling and organization
 - JavaScript (ES6+) — for dynamic behavior and API interaction
 - API — to fetch product data and handle orders
-- Responsive design — optimized for mobile and desktop devices
